@@ -1,0 +1,30 @@
+# Standalone local execution profile (uses embedded in-memory database)
+# Useful for local evaluation when Docker / PostgreSQL is not installed
+
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:h2:mem:smart_building_standalone;DB_CLOSE_DELAY=-1;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    open-in-view: false
+
+  flyway:
+    enabled: false
+
+ai-service:
+  base-url: ${AI_SERVICE_URL:http://localhost:8000}
+
+logging:
+  level:
+    root: INFO
+    com.smartbuilding: INFO

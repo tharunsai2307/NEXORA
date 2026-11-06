@@ -1,0 +1,108 @@
+version: '3.8'
+
+services:
+  # 1. PostgreSQL Database Service
+  postgres:
+    image: postgres:16-alpine
+    container_name: smart_building_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-smart_building_db}
+      POSTGRES_USER: ${DB_USER:-smart_admin}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-smart_building_secure_pass_2026}
+    ports:
+      - "${DB_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-smart_admin} -d ${DB_NAME:-smart_building_db}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    networks:
+      - smart-building-net
+
+  # 2. Python FastAPI Edge-AI Service
+  ai-service:
+    build:
+      context: ./ai-engine
+      dockerfile: Dockerfile
+    container_name: smart_building_ai
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8000
+      ENVIRONMENT: production
+    ports:
+      - "${AI_SERVICE_PORT:-8000}:8000"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    networks:
+      - smart-building-net
+
+  # 3. Java 21 Spring Boot Backend Core
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: smart_building_backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      ai-service:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      PORT: 8080
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: ${DB_NAME:-smart_building_db}
+      DB_USER: ${DB_USER:-smart_admin}
+      DB_PASSWORD: ${DB_PASSWORD:-smart_building_secure_pass_2026}
+      AI_SERVICE_URL: http://ai-service:8000
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8080/api/v1/health || exit 1"]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks:
+      - smart-building-net
+
+  # 4. React Frontend (Nginx Production Container)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: smart_building_frontend
+    restart: unless-stopped
+    depends_on:
+      backend:
+        condition: service_healthy
+    ports:
+      - "${FRONTEND_PORT:-5173}:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost/ || exit 1"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+    networks:
+      - smart-building-net
+
+volumes:
+  postgres_data:
+    name: smart_building_postgres_data
+
+networks:
+  smart-building-net:
+    name: smart_building_network
+    driver: bridge

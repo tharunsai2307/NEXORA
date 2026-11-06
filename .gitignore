@@ -1,0 +1,68 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+*.env
+
+# Operating System
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE & Editor files
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+*.swp
+*.swo
+
+# Node / Frontend
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Java / Maven / Backend
+target/
+backend/target/
+*.class
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+hs_err_pid*
+replay_pid*
+.mvn/wrapper/maven-wrapper.jar
+
+# Python / AI Engine
+__pycache__/
+*/__pycache__/
+*/*/__pycache__/
+*/*/*/__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+ai-engine/.venv/
+ai-engine/venv/
+ai-engine/.pytest_cache/
+ai-engine/.coverage
+ai-engine/htmlcov/
+.pytest_cache/
+
+# Database data (Docker volumes / local mounts)
+database/data/
+postgres_data/
+
+# Logs
+logs/
+*.log

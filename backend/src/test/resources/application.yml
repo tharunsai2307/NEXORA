@@ -1,0 +1,42 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: smart-building-backend-test
+
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    open-in-view: false
+
+  flyway:
+    enabled: false
+
+ai-service:
+  base-url: http://localhost:8000
+  connect-timeout-ms: 1000
+  read-timeout-ms: 1000
+
+cors:
+  allowed-origins:
+    - "http://localhost:5173"
+  allowed-methods:
+    - GET
+    - POST
+  allowed-headers:
+    - "*"
+  allow-credentials: true
+
+logging:
+  level:
+    root: INFO
+    com.smartbuilding: DEBUG

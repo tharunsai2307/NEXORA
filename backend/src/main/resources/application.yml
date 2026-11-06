@@ -1,0 +1,80 @@
+server:
+  port: ${PORT:8080}
+  shutdown: graceful
+
+spring:
+  application:
+    name: smart-building-backend
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+
+  # Database DataSource Configuration (defaults can be overridden via environment variables)
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:smart_building_db}
+    username: ${DB_USER:smart_admin}
+    password: ${DB_PASSWORD:smart_building_secure_pass_2026}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      connection-timeout: 5000
+      idle-timeout: 300000
+      max-lifetime: 1800000
+
+  # JPA & Hibernate Settings
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: false
+
+  # Flyway Migration Configuration
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    locations: classpath:db/migration
+
+# Actuator Endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+# AI Service Client Configuration
+ai-service:
+  base-url: ${AI_SERVICE_URL:http://localhost:8000}
+  connect-timeout-ms: 3000
+  read-timeout-ms: 5000
+
+# CORS Configuration
+cors:
+  allowed-origins:
+    - "http://localhost:5173"
+    - "http://127.0.0.1:5173"
+    - "http://localhost:3000"
+    - "http://127.0.0.1:3000"
+  allowed-methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - OPTIONS
+    - PATCH
+  allowed-headers:
+    - "*"
+  allow-credentials: true
+
+logging:
+  level:
+    root: INFO
+    com.smartbuilding: DEBUG
+    org.springframework.web: INFO
+    org.hibernate: INFO

@@ -66,3 +66,9 @@ postgres_data/
 # Logs
 logs/
 *.log
+
+# Agent & Skill metadata
+.agents/
+skills-lock.json
+*.tsbuildinfo
+

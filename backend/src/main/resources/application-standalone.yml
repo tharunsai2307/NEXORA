@@ -24,6 +24,10 @@ spring:
 ai-service:
   base-url: ${AI_SERVICE_URL:http://localhost:8000}
 
+jwt:
+  secret: nexora_secret_key_smart_building_digital_twin_super_secure_key_2026_at_least_256_bits
+  expiration-ms: 86400000
+
 logging:
   level:
     root: INFO

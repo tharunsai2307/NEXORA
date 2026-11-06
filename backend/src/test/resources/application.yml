@@ -26,6 +26,10 @@ ai-service:
   connect-timeout-ms: 1000
   read-timeout-ms: 1000
 
+jwt:
+  secret: nexora-super-secret-jwt-signing-key-change-in-production-2026-min-32-bytes
+  expiration-ms: 86400000
+
 cors:
   allowed-origins:
     - "http://localhost:5173"

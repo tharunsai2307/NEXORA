@@ -7,10 +7,12 @@ import com.smartbuilding.health.service.HealthService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.Instant;
@@ -21,7 +23,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(SystemController.class)
-@Import(SecurityConfig.class)
+@AutoConfigureMockMvc(addFilters = false)
+@ActiveProfiles("test")
 class SystemControllerTest {
 
     @Autowired
@@ -29,6 +32,9 @@ class SystemControllerTest {
 
     @MockBean
     private HealthService healthService;
+
+    @MockBean
+    private com.smartbuilding.building.service.DashboardStatsService dashboardStatsService;
 
     @Test
     @DisplayName("GET /api/v1/system/info returns system status and metadata")

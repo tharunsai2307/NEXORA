@@ -54,6 +54,11 @@ ai-service:
   connect-timeout-ms: 3000
   read-timeout-ms: 5000
 
+# JWT Configuration
+jwt:
+  secret: ${JWT_SECRET:nexora_secret_key_smart_building_digital_twin_super_secure_key_2026_at_least_256_bits}
+  expiration-ms: ${JWT_EXPIRATION_MS:86400000} # 24 hours
+
 # CORS Configuration
 cors:
   allowed-origins:

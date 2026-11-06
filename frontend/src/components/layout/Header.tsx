@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { SubsystemStatus } from '../../types/system';
-import { Clock, Radio, Activity } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
+import { Clock, Activity, User } from 'lucide-react';
 
 interface HeaderProps {
   status: SubsystemStatus;
@@ -9,6 +10,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ status }) => {
   const location = useLocation();
+  const { user } = useAuth();
   const [currentTime, setCurrentTime] = useState<string>('');
 
   useEffect(() => {
@@ -30,9 +32,9 @@ export const Header: React.FC<HeaderProps> = ({ status }) => {
       {/* Breadcrumb / Section */}
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">
-          <Activity className="w-4 h-4 text-cyan-400" />
-          <span className="text-xs font-mono uppercase tracking-widest text-slate-400">
-            SYSTEM /
+          <Activity className="w-4 h-4 text-emerald-400" />
+          <span className="text-xs font-mono uppercase tracking-widest text-slate-500">
+            NEXORA /
           </span>
           <span className="text-sm font-semibold tracking-wide text-slate-100">
             {routeName}
@@ -66,11 +68,13 @@ export const Header: React.FC<HeaderProps> = ({ status }) => {
           </span>
         </div>
 
-        {/* Node Profile */}
-        <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono text-slate-400 bg-[#0e1624] border border-[#1e2e47] rounded-md">
-          <Radio className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-          <span>NODE: EDGE-01</span>
-        </div>
+        {/* User Pill */}
+        {user && (
+          <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono text-slate-300 bg-[#0e1624] border border-[#1e2e47] rounded-md">
+            <User className="w-3.5 h-3.5 text-emerald-400" />
+            <span>{user.fullName}</span>
+          </div>
+        )}
       </div>
     </header>
   );

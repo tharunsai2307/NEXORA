@@ -23,4 +23,28 @@ public class ServiceException extends RuntimeException {
     public HttpStatus getStatus() {
         return status;
     }
+
+    public static ServiceException badRequest(String message) {
+        return new ServiceException(message, HttpStatus.BAD_REQUEST);
+    }
+
+    public static ServiceException notFound(String message) {
+        return new ServiceException(message, HttpStatus.NOT_FOUND);
+    }
+
+    public static ServiceException unauthorized(String message) {
+        return new ServiceException(message, HttpStatus.UNAUTHORIZED);
+    }
+
+    public static ServiceException forbidden(String message) {
+        return new ServiceException(message, HttpStatus.FORBIDDEN);
+    }
+
+    public static ServiceException conflict(String message) {
+        return new ServiceException(message, HttpStatus.CONFLICT);
+    }
+
+    public static ServiceException internal(String message) {
+        return new ServiceException(message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
 }

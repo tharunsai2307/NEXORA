@@ -3,6 +3,10 @@ package com.smartbuilding.sensor.service;
 import com.smartbuilding.building.model.Room;
 import com.smartbuilding.building.repository.RoomRepository;
 import com.smartbuilding.common.ServiceException;
+import com.smartbuilding.emergency.model.IncidentCategory;
+import com.smartbuilding.emergency.model.IncidentSeverity;
+import com.smartbuilding.emergency.model.IncidentSource;
+import com.smartbuilding.emergency.service.IncidentService;
 import com.smartbuilding.sensor.dto.*;
 import com.smartbuilding.sensor.model.*;
 import com.smartbuilding.sensor.repository.SensorReadingRepository;
@@ -11,6 +15,7 @@ import com.smartbuilding.simulation.model.SessionStatus;
 import com.smartbuilding.simulation.repository.SimulationSessionRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +34,9 @@ public class SensorServiceImpl implements SensorService {
     private final RoomRepository roomRepository;
     private final SimulationSessionRepository sessionRepository;
     private final SensorRealtimeBroadcaster broadcaster;
+
+    @Autowired(required = false)
+    private IncidentService incidentService;
 
     public SensorServiceImpl(
             SensorRepository sensorRepository,
@@ -229,7 +237,43 @@ public class SensorServiceImpl implements SensorService {
                 ? sensor.getRoom().getFloor().getBuilding().getId() : null;
         broadcaster.broadcastSensorReading(bldId, response);
 
+        // Check for emergency thresholds and trigger incident if critical
+        if (incidentService != null && bldId != null && sensor.getRoom() != null) {
+            checkSensorEmergencyThresholds(sensor, readingValue, bldId);
+        }
+
         return response;
+    }
+
+    private void checkSensorEmergencyThresholds(Sensor sensor, double value, String buildingId) {
+        Room room = sensor.getRoom();
+        if (sensor.getSensorType() == SensorType.SMOKE && value > 50.0) {
+            IncidentSeverity sev = value > 75.0 ? IncidentSeverity.CRITICAL : IncidentSeverity.HIGH;
+            incidentService.processSensorOrAiDetection(
+                    buildingId, room.getId(), IncidentCategory.SMOKE, sev, IncidentSource.SENSOR,
+                    "Smoke Alert: " + Math.round(value) + " ppm detected in " + room.getRoomName(),
+                    "Manual reading indicated dangerous smoke level of " + value + " ppm."
+            );
+        } else if (sensor.getSensorType() == SensorType.TEMPERATURE && value > 48.0) {
+            IncidentSeverity sev = value > 55.0 ? IncidentSeverity.CRITICAL : IncidentSeverity.HIGH;
+            incidentService.processSensorOrAiDetection(
+                    buildingId, room.getId(), IncidentCategory.HIGH_TEMPERATURE, sev, IncidentSource.SENSOR,
+                    "High Temperature: " + Math.round(value) + "°C in " + room.getRoomName(),
+                    "Extreme thermal conditions detected (" + value + "°C)."
+            );
+        } else if (sensor.getSensorType() == SensorType.AIR_QUALITY && value > 250.0) {
+            incidentService.processSensorOrAiDetection(
+                    buildingId, room.getId(), IncidentCategory.POOR_AIR_QUALITY, IncidentSeverity.HIGH, IncidentSource.SENSOR,
+                    "Hazardous Air Quality (AQI " + Math.round(value) + ") in " + room.getRoomName(),
+                    "Air quality index has exceeded hazardous emergency threshold."
+            );
+        } else if (sensor.getSensorType() == SensorType.OCCUPANCY && value > room.getMaximumCapacity() * 1.2) {
+            incidentService.processSensorOrAiDetection(
+                    buildingId, room.getId(), IncidentCategory.OVERCROWDING, IncidentSeverity.MEDIUM, IncidentSource.SENSOR,
+                    "Overcrowding Alert in " + room.getRoomName(),
+                    "Occupancy (" + Math.round(value) + ") exceeded maximum rated room capacity of " + room.getMaximumCapacity() + "."
+            );
+        }
     }
 
     @Override

@@ -6,12 +6,14 @@ import * as THREE from 'three';
 
 import { RoomMesh } from './RoomMesh';
 import { FloorSlab } from './FloorSlab';
+import { EvacuationRouteMesh } from './EvacuationRouteMesh';
 import {
   DigitalTwinBuilding,
   DigitalTwinRoom,
   DisplayMode,
   CameraViewPreset,
 } from '../../types/digitaltwin';
+import { EvacuationRoute } from '../../types/emergency';
 
 // Inject THREE into window for Geometry helper access if needed
 if (typeof window !== 'undefined' && !(window as any).THREE) {
@@ -27,6 +29,8 @@ interface BuildingSceneProps {
   cameraPreset: CameraViewPreset;
   explodedGap: number;
   wireframe: boolean;
+  routes?: EvacuationRoute[];
+  showRoutes?: boolean;
 }
 
 // Camera controller component inside R3F Canvas
@@ -74,6 +78,8 @@ export const BuildingScene: React.FC<BuildingSceneProps> = ({
   cameraPreset,
   explodedGap,
   wireframe,
+  routes = [],
+  showRoutes = true,
 }) => {
   const controlsRef = useRef<OrbitControlsImpl>(null);
 
@@ -147,8 +153,21 @@ export const BuildingScene: React.FC<BuildingSceneProps> = ({
               </group>
             );
           })}
+
+          {/* 3D Dynamic Evacuation Routes */}
+          {(displayMode === 'EMERGENCY' || showRoutes) &&
+            routes.map((rt) => (
+              <EvacuationRouteMesh
+                key={rt.id}
+                route={rt}
+                isAllFloors={isAllFloors}
+                explodedGap={explodedGap}
+                highlighted={selectedRoomId === rt.originRoomId}
+              />
+            ))}
         </group>
       </Canvas>
     </div>
   );
 };
+

@@ -52,3 +52,4 @@ export const FloorSlab: React.FC<FloorSlabProps> = ({
     </group>
   );
 };
+

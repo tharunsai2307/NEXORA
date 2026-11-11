@@ -36,3 +36,4 @@ public class DigitalTwinController {
         return ResponseEntity.ok(ApiResponse.success("Room 3D spatial layout coordinates updated successfully", response));
     }
 }
+

@@ -10,3 +10,4 @@ public interface DigitalTwinService {
 
     DigitalTwinRoomResponse updateRoomLayout(String roomId, RoomLayoutUpdateRequest request);
 }
+

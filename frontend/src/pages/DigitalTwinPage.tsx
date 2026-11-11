@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { buildingApi, digitalTwinApi } from '../services/api';
+import { buildingApi, digitalTwinApi, evacuationApi } from '../services/api';
 import { Building } from '../types/building';
 import {
   DigitalTwinBuilding,
@@ -8,6 +8,7 @@ import {
   CameraViewPreset,
   RoomLayoutUpdatePayload,
 } from '../types/digitaltwin';
+import { EvacuationRoute } from '../types/emergency';
 import { BuildingScene } from '../components/digitaltwin/BuildingScene';
 import { SceneToolbar } from '../components/digitaltwin/SceneToolbar';
 import { DigitalTwinLegend } from '../components/digitaltwin/DigitalTwinLegend';
@@ -39,6 +40,7 @@ export const DigitalTwinPage: React.FC = () => {
   const [explodedGap, setExplodedGap] = useState<number>(3);
   const [wireframe, setWireframe] = useState<boolean>(false);
   const [wsConnected, setWsConnected] = useState<boolean>(false);
+  const [routes, setRoutes] = useState<EvacuationRoute[]>([]);
 
   // WebSocket reference
   const wsRef = useRef<WebSocket | null>(null);
@@ -66,6 +68,12 @@ export const DigitalTwinPage: React.FC = () => {
     try {
       const data = await digitalTwinApi.getBuildingTwin(bId);
       setTwinData(data);
+      try {
+        const rList = await evacuationApi.getBuildingRoutes(bId);
+        setRoutes(rList || []);
+      } catch (e) {
+        console.warn('Evacuation routes not initialized yet for building', e);
+      }
       // If selected room was open, refresh reference
       setSelectedRoom((prev) => {
         if (!prev) return null;
@@ -113,6 +121,10 @@ export const DigitalTwinPage: React.FC = () => {
           `/topic/buildings/${selectedBuildingId}/ai/anomalies`,
           `/topic/buildings/${selectedBuildingId}/ai/predictions`,
           `/topic/buildings/${selectedBuildingId}/ai/risk`,
+          `/topic/buildings/${selectedBuildingId}/incidents`,
+          `/topic/buildings/${selectedBuildingId}/emergency`,
+          `/topic/buildings/${selectedBuildingId}/evacuation`,
+          `/topic/buildings/${selectedBuildingId}/routes`,
         ];
 
         topics.forEach((t, i) => {
@@ -329,6 +341,8 @@ export const DigitalTwinPage: React.FC = () => {
                 cameraPreset={cameraPreset}
                 explodedGap={explodedGap}
                 wireframe={wireframe}
+                routes={routes}
+                showRoutes={displayMode === 'EMERGENCY'}
               />
 
               {/* Color Scale Legend */}

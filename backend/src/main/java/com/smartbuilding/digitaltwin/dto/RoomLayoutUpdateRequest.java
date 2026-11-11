@@ -11,3 +11,4 @@ public record RoomLayoutUpdateRequest(
         @NotNull @DecimalMin(value = "0.5") Double depth,
         @NotNull @DecimalMin(value = "0.5") Double height
 ) {}
+

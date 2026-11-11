@@ -16,3 +16,4 @@ public record DigitalTwinFloorResponse(
         int currentOccupancy,
         List<DigitalTwinRoomResponse> rooms
 ) {}
+

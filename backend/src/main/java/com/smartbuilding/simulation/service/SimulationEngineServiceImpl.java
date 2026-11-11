@@ -5,6 +5,10 @@ import com.smartbuilding.building.model.Room;
 import com.smartbuilding.building.repository.BuildingRepository;
 import com.smartbuilding.building.repository.RoomRepository;
 import com.smartbuilding.common.ServiceException;
+import com.smartbuilding.emergency.model.IncidentCategory;
+import com.smartbuilding.emergency.model.IncidentSeverity;
+import com.smartbuilding.emergency.model.IncidentSource;
+import com.smartbuilding.emergency.service.IncidentService;
 import com.smartbuilding.sensor.dto.SensorReadingResponse;
 import com.smartbuilding.sensor.model.*;
 import com.smartbuilding.sensor.repository.SensorReadingRepository;
@@ -44,6 +48,9 @@ public class SimulationEngineServiceImpl implements SimulationEngineService {
     private final BuildingRepository buildingRepository;
     private final RoomRepository roomRepository;
     private final SensorRealtimeBroadcaster broadcaster;
+
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    private IncidentService incidentService;
 
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(4, new ThreadFactory() {
         private int count = 1;
@@ -420,6 +427,28 @@ public class SimulationEngineServiceImpl implements SimulationEngineService {
                         roomRepository.save(room);
 
                         broadcaster.broadcastRoomOccupancy(buildingId, room.getId(), newOcc, room.getMaximumCapacity());
+                    }
+
+                    // Check for emergency thresholds during simulation
+                    if (incidentService != null && sensor.getRoom() != null) {
+                        Room room = sensor.getRoom();
+                        if (sensor.getSensorType() == SensorType.SMOKE && nextVal > 60.0) {
+                            incidentService.processSensorOrAiDetection(
+                                    buildingId, room.getId(), IncidentCategory.SMOKE,
+                                    nextVal > 75.0 ? IncidentSeverity.CRITICAL : IncidentSeverity.HIGH,
+                                    IncidentSource.SENSOR,
+                                    "Simulated Smoke Alert: " + Math.round(nextVal) + " ppm",
+                                    "Sensor " + sensor.getSensorName() + " triggered emergency threshold during simulation."
+                            );
+                        } else if (sensor.getSensorType() == SensorType.TEMPERATURE && nextVal > 46.0) {
+                            incidentService.processSensorOrAiDetection(
+                                    buildingId, room.getId(), IncidentCategory.HIGH_TEMPERATURE,
+                                    IncidentSeverity.HIGH,
+                                    IncidentSource.SENSOR,
+                                    "Simulated Heat Warning: " + Math.round(nextVal) + "°C",
+                                    "Sensor " + sensor.getSensorName() + " detected dangerous temperature during simulation."
+                            );
+                        }
                     }
 
                 } catch (Exception ex) {

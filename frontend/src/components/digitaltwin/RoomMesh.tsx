@@ -70,6 +70,18 @@ export const RoomMesh: React.FC<RoomMeshProps> = ({
         return '#10b981';
       }
 
+      case 'EMERGENCY': {
+        if ((room as any).activeIncident || room.riskLevel === 'CRITICAL') {
+          return '#dc2626'; // Bright Emergency Red
+        }
+        const evac = (room as any).evacuationStatus;
+        if (evac === 'CLEARED') return '#10b981'; // Calm Green
+        if (evac === 'NEEDS_ASSISTANCE') return '#d946ef'; // Magenta Alert
+        if (evac === 'BLOCKED') return '#7f1d1d'; // Dark Red Impassable
+        if (evac === 'EVACUATING' || room.currentOccupancy > 0) return '#f59e0b'; // Amber Evacuating
+        return '#334155'; // Muted Slate
+      }
+
       case 'DEFAULT':
       default:
         switch (room.roomType) {
@@ -106,12 +118,23 @@ export const RoomMesh: React.FC<RoomMeshProps> = ({
         return `${(room.sensorReadings?.SMOKE ?? 0.2).toFixed(1)} ppm`;
       case 'AIR_QUALITY':
         return `${Math.round(room.sensorReadings?.AIR_QUALITY ?? 35)} AQI`;
+      case 'EMERGENCY': {
+        if ((room as any).activeIncident) {
+          return `🚨 ${(room as any).activeIncident.category || 'INCIDENT'}`;
+        }
+        const evac = (room as any).evacuationStatus;
+        if (evac) {
+          return `${evac} (${(room as any).evacuationRemaining ?? room.currentOccupancy} left)`;
+        }
+        return `${room.currentOccupancy} occ`;
+      }
       default:
         return `${room.currentOccupancy} occ`;
     }
   };
 
-  const isCritical = room.riskLevel === 'CRITICAL' && displayMode === 'RISK';
+  const isEmergencyActive = displayMode === 'EMERGENCY' && (Boolean((room as any).activeIncident) || room.riskLevel === 'CRITICAL');
+  const isCritical = (room.riskLevel === 'CRITICAL' && displayMode === 'RISK') || isEmergencyActive;
   const baseColor = getRoomColor();
   const roomY = floorElevation + room.height / 2;
 
@@ -190,3 +213,4 @@ export const RoomMesh: React.FC<RoomMeshProps> = ({
     </group>
   );
 };
+

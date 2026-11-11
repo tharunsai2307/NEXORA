@@ -15,6 +15,10 @@ import com.smartbuilding.building.model.Room;
 import com.smartbuilding.building.repository.BuildingRepository;
 import com.smartbuilding.building.repository.RoomRepository;
 import com.smartbuilding.common.ServiceException;
+import com.smartbuilding.emergency.model.IncidentCategory;
+import com.smartbuilding.emergency.model.IncidentSeverity;
+import com.smartbuilding.emergency.model.IncidentSource;
+import com.smartbuilding.emergency.service.IncidentService;
 import com.smartbuilding.sensor.model.Sensor;
 import com.smartbuilding.sensor.model.SensorReading;
 import com.smartbuilding.sensor.model.SensorType;
@@ -49,6 +53,9 @@ public class AiInferenceOrchestratorServiceImpl implements AiInferenceOrchestrat
     private final AiModelMetadataRepository modelMetadataRepository;
     private final SensorRealtimeBroadcaster broadcaster;
     private final ObjectMapper objectMapper;
+
+    @org.springframework.beans.factory.annotation.Autowired(required = false)
+    private IncidentService incidentService;
 
     public AiInferenceOrchestratorServiceImpl(
             AiServiceClient aiServiceClient,
@@ -258,6 +265,21 @@ public class AiInferenceOrchestratorServiceImpl implements AiInferenceOrchestrat
                 "explanation", riskRes.explanation(),
                 "timestamp", Instant.now().toString()
         ));
+
+        // Auto-generate Incident if AI assesses CRITICAL risk
+        if (incidentService != null && ("CRITICAL".equalsIgnoreCase(riskRes.riskLevel()) || (riskRes.overallRiskScore() != null && riskRes.overallRiskScore() >= 75.0))) {
+            IncidentCategory cat = (smoke != null && smoke > 50.0) ? IncidentCategory.SMOKE
+                    : ((temperature != null && temperature > 45.0) ? IncidentCategory.HIGH_TEMPERATURE : IncidentCategory.FIRE);
+            incidentService.processSensorOrAiDetection(
+                    buildingId,
+                    roomId,
+                    cat,
+                    IncidentSeverity.CRITICAL,
+                    IncidentSource.AI,
+                    "AI Emergency Alert: " + cat + " in " + room.getRoomName(),
+                    riskRes.explanation()
+            );
+        }
 
         // 9. Build response
         Map<String, Object> snapshots = Map.of(

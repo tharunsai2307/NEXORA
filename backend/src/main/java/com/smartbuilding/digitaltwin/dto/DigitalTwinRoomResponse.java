@@ -31,3 +31,4 @@ public record DigitalTwinRoomResponse(
         String anomalyExplanation,
         Map<String, Double> sensorReadings
 ) {}
+

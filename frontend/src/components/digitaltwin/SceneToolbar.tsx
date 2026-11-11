@@ -11,6 +11,7 @@ import {
   RotateCcw,
   Sliders,
   Box,
+  AlertTriangle,
 } from 'lucide-react';
 import { DisplayMode, CameraViewPreset, DigitalTwinFloor } from '../../types/digitaltwin';
 
@@ -48,6 +49,7 @@ export const SceneToolbar: React.FC<SceneToolbarProps> = ({
     { mode: 'TEMPERATURE', label: 'Thermal', icon: Thermometer },
     { mode: 'SMOKE', label: 'Smoke', icon: Flame },
     { mode: 'AIR_QUALITY', label: 'AQI', icon: Wind },
+    { mode: 'EMERGENCY', label: 'Emergency', icon: AlertTriangle },
   ];
 
   const cameraPresets: { preset: CameraViewPreset; label: string }[] = [
@@ -156,3 +158,4 @@ export const SceneToolbar: React.FC<SceneToolbarProps> = ({
     </div>
   );
 };
+

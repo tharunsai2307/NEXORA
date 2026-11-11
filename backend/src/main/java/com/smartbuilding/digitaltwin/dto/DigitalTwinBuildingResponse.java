@@ -21,3 +21,4 @@ public record DigitalTwinBuildingResponse(
         long normalRoomsCount,
         List<DigitalTwinFloorResponse> floors
 ) {}
+

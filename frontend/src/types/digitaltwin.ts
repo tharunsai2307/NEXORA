@@ -4,7 +4,8 @@ export type DisplayMode =
   | 'OCCUPANCY'
   | 'TEMPERATURE'
   | 'SMOKE'
-  | 'AIR_QUALITY';
+  | 'AIR_QUALITY'
+  | 'EMERGENCY';
 
 export type CameraViewPreset =
   | 'PERSPECTIVE'
@@ -86,3 +87,4 @@ export interface RoomLayoutUpdatePayload {
   depth: number;
   height: number;
 }
+

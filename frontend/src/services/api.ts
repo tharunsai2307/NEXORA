@@ -42,6 +42,20 @@ import {
   DigitalTwinRoom,
   RoomLayoutUpdatePayload,
 } from '../types/digitaltwin';
+import {
+  Incident,
+  IncidentSeverity,
+  IncidentStatus,
+  IncidentCategory,
+  CreateIncidentPayload,
+  UpdateIncidentStatusPayload,
+  EvacuationSession,
+  StartEvacuationPayload,
+  BuildingEmergencyStatus,
+  EvacuationGraph,
+  EvacuationRoute,
+  EvacuationConnection,
+} from '../types/emergency';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1';
 
@@ -493,6 +507,131 @@ export const digitalTwinApi = {
 
   async updateRoomLayout(roomId: string, payload: RoomLayoutUpdatePayload): Promise<DigitalTwinRoom> {
     const response = await apiClient.put<ApiResponse<DigitalTwinRoom>>(`/digital-twin/rooms/${roomId}/layout`, payload);
+    return response.data.data;
+  },
+};
+
+export const incidentApi = {
+  async createIncident(payload: CreateIncidentPayload): Promise<Incident> {
+    const response = await apiClient.post<ApiResponse<Incident>>('/incidents', payload);
+    return response.data.data;
+  },
+
+  async getIncident(id: string): Promise<Incident> {
+    const response = await apiClient.get<ApiResponse<Incident>>(`/incidents/${id}`);
+    return response.data.data;
+  },
+
+  async getIncidents(params?: {
+    buildingId?: string;
+    status?: IncidentStatus;
+    severity?: IncidentSeverity;
+    category?: IncidentCategory;
+    page?: number;
+    size?: number;
+  }): Promise<{ content: Incident[]; totalElements: number; totalPages: number }> {
+    const response = await apiClient.get<ApiResponse<{ content: Incident[]; totalElements: number; totalPages: number }>>('/incidents', { params });
+    return response.data.data;
+  },
+
+  async getActiveBuildingIncidents(buildingId: string): Promise<Incident[]> {
+    const response = await apiClient.get<ApiResponse<Incident[]>>(`/incidents/buildings/${buildingId}/active`);
+    return response.data.data;
+  },
+
+  async updateStatus(id: string, payload: UpdateIncidentStatusPayload): Promise<Incident> {
+    const response = await apiClient.patch<ApiResponse<Incident>>(`/incidents/${id}/status`, payload);
+    return response.data.data;
+  },
+
+  async assignIncident(id: string, userId: string, notes?: string): Promise<Incident> {
+    const response = await apiClient.post<ApiResponse<Incident>>(`/incidents/${id}/assign`, { userId, notes });
+    return response.data.data;
+  },
+
+  async acknowledgeIncident(id: string): Promise<Incident> {
+    const response = await apiClient.post<ApiResponse<Incident>>(`/incidents/${id}/acknowledge`);
+    return response.data.data;
+  },
+
+  async resolveIncident(id: string, notes?: string): Promise<Incident> {
+    const response = await apiClient.post<ApiResponse<Incident>>(`/incidents/${id}/resolve`, null, {
+      params: notes ? { notes } : undefined,
+    });
+    return response.data.data;
+  },
+};
+
+export const emergencyApi = {
+  async getBuildingEmergencyStatus(buildingId: string): Promise<BuildingEmergencyStatus> {
+    const response = await apiClient.get<ApiResponse<BuildingEmergencyStatus>>(`/emergency/buildings/${buildingId}/status`);
+    return response.data.data;
+  },
+
+  async activateEmergency(buildingId: string, reason?: string): Promise<BuildingEmergencyStatus> {
+    const response = await apiClient.post<ApiResponse<BuildingEmergencyStatus>>(`/emergency/buildings/${buildingId}/activate`, { reason });
+    return response.data.data;
+  },
+};
+
+export const evacuationApi = {
+  async startEvacuation(buildingId: string, payload?: StartEvacuationPayload): Promise<EvacuationSession> {
+    const response = await apiClient.post<ApiResponse<EvacuationSession>>(`/evacuations/buildings/${buildingId}/start`, payload || {});
+    return response.data.data;
+  },
+
+  async getSession(id: string): Promise<EvacuationSession> {
+    const response = await apiClient.get<ApiResponse<EvacuationSession>>(`/evacuations/${id}`);
+    return response.data.data;
+  },
+
+  async pauseEvacuation(id: string): Promise<EvacuationSession> {
+    const response = await apiClient.post<ApiResponse<EvacuationSession>>(`/evacuations/${id}/pause`);
+    return response.data.data;
+  },
+
+  async resumeEvacuation(id: string): Promise<EvacuationSession> {
+    const response = await apiClient.post<ApiResponse<EvacuationSession>>(`/evacuations/${id}/resume`);
+    return response.data.data;
+  },
+
+  async cancelEvacuation(id: string): Promise<EvacuationSession> {
+    const response = await apiClient.post<ApiResponse<EvacuationSession>>(`/evacuations/${id}/cancel`);
+    return response.data.data;
+  },
+
+  async stepEvacuation(id: string): Promise<EvacuationSession> {
+    const response = await apiClient.post<ApiResponse<EvacuationSession>>(`/evacuations/${id}/step`);
+    return response.data.data;
+  },
+
+  async getActiveSession(buildingId: string): Promise<EvacuationSession | null> {
+    const response = await apiClient.get<ApiResponse<EvacuationSession>>(`/evacuations/buildings/${buildingId}/active`);
+    return response.data.data;
+  },
+
+  async getBuildingSessions(buildingId: string): Promise<EvacuationSession[]> {
+    const response = await apiClient.get<ApiResponse<EvacuationSession[]>>(`/evacuations/buildings/${buildingId}/sessions`);
+    return response.data.data;
+  },
+
+  async getBuildingGraph(buildingId: string): Promise<EvacuationGraph> {
+    const response = await apiClient.get<ApiResponse<EvacuationGraph>>(`/evacuation/buildings/${buildingId}/graph`);
+    return response.data.data;
+  },
+
+  async toggleConnectionBlock(connectionId: string): Promise<EvacuationConnection> {
+    const response = await apiClient.post<ApiResponse<EvacuationConnection>>(`/evacuation/connections/${connectionId}/toggle-block`);
+    return response.data.data;
+  },
+
+  async getBuildingRoutes(buildingId: string): Promise<EvacuationRoute[]> {
+    const response = await apiClient.get<ApiResponse<EvacuationRoute[]>>(`/evacuation/buildings/${buildingId}/routes`);
+    return response.data.data;
+  },
+
+  async recalculateRoutes(buildingId: string): Promise<EvacuationRoute[]> {
+    const response = await apiClient.post<ApiResponse<EvacuationRoute[]>>(`/evacuation/buildings/${buildingId}/routes/recalculate`);
     return response.data.data;
   },
 };

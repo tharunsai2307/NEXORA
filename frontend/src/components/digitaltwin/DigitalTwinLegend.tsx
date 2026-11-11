@@ -44,6 +44,16 @@ export const DigitalTwinLegend: React.FC<DigitalTwinLegendProps> = ({ displayMod
           { label: '100-200 Unhealthy', color: 'bg-orange-500' },
           { label: '≥ 200 Hazardous', color: 'bg-red-500' },
         ];
+      case 'EMERGENCY':
+        return [
+          { label: 'Active Hazard / Alarm', color: 'bg-red-500' },
+          { label: 'Evacuating Room', color: 'bg-amber-500' },
+          { label: 'Needs Assistance', color: 'bg-fuchsia-500' },
+          { label: 'Room Cleared', color: 'bg-emerald-500' },
+          { label: 'Safe Egress Path', color: 'bg-cyan-500' },
+          { label: 'Emergency Exit', color: 'bg-emerald-400' },
+          { label: 'Blocked Route', color: 'bg-rose-900' },
+        ];
       case 'DEFAULT':
       default:
         return [
@@ -75,3 +85,4 @@ export const DigitalTwinLegend: React.FC<DigitalTwinLegendProps> = ({ displayMod
     </div>
   );
 };
+

@@ -179,3 +179,4 @@ Migration `V2__auth_and_building_management.sql` establishes initial default acc
    - Floor 1: Executive Suite & Edge AI Lab (Server Room, Conference Hall)
    - Floor 2: Collaborative Workstations (Engineering Lab, Meeting Pod)
    - Total pre-seeded capacity: 340 occupants.
+

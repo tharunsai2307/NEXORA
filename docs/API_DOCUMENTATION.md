@@ -263,3 +263,4 @@ All responses conform to the standard RFC-compliant JSON envelope:
   }
 }
 ```
+

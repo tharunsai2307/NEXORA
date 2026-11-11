@@ -64,6 +64,8 @@ public class SecurityConfig {
                                 "/api/v1/health/**",
                                 "/api/v1/system/info",
                                 "/actuator/**",
+                                "/ws/**",
+                                "/ws-raw/**",
                                 "/error"
                         ).permitAll()
                         .anyRequest().authenticated()

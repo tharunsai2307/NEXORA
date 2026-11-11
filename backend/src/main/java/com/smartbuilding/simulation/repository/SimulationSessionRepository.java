@@ -23,3 +23,4 @@ public interface SimulationSessionRepository extends JpaRepository<SimulationSes
 
     List<SimulationSession> findTop20ByOrderByStartedAtDesc();
 }
+

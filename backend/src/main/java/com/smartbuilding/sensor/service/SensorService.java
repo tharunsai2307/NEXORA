@@ -30,3 +30,4 @@ public interface SensorService {
 
     SensorStatsResponse getSensorStats();
 }
+

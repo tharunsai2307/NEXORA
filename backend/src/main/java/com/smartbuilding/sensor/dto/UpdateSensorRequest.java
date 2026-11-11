@@ -34,3 +34,4 @@ public class UpdateSensorRequest {
         this.status = status;
     }
 }
+

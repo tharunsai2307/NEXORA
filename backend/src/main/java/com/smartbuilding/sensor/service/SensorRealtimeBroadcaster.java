@@ -77,4 +77,32 @@ public class SensorRealtimeBroadcaster {
             logger.warn("Failed to broadcast simulation session status: {}", e.getMessage());
         }
     }
+
+    public void broadcastAiAnomaly(String buildingId, Object anomalyPayload) {
+        if (messagingTemplate == null || buildingId == null) return;
+        try {
+            messagingTemplate.convertAndSend("/topic/buildings/" + buildingId + "/ai/anomalies", anomalyPayload);
+        } catch (Exception e) {
+            logger.warn("Failed to broadcast AI anomaly update: {}", e.getMessage());
+        }
+    }
+
+    public void broadcastAiPrediction(String buildingId, Object predictionPayload) {
+        if (messagingTemplate == null || buildingId == null) return;
+        try {
+            messagingTemplate.convertAndSend("/topic/buildings/" + buildingId + "/ai/predictions", predictionPayload);
+        } catch (Exception e) {
+            logger.warn("Failed to broadcast AI occupancy prediction update: {}", e.getMessage());
+        }
+    }
+
+    public void broadcastAiRisk(String buildingId, Object riskPayload) {
+        if (messagingTemplate == null || buildingId == null) return;
+        try {
+            messagingTemplate.convertAndSend("/topic/buildings/" + buildingId + "/ai/risk", riskPayload);
+        } catch (Exception e) {
+            logger.warn("Failed to broadcast AI risk assessment update: {}", e.getMessage());
+        }
+    }
 }
+

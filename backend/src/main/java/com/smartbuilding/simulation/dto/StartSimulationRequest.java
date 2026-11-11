@@ -48,3 +48,4 @@ public class StartSimulationRequest {
         this.simulationIntervalSeconds = simulationIntervalSeconds;
     }
 }
+

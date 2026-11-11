@@ -133,3 +133,4 @@ public class SensorReadingResponse {
         this.scenarioId = scenarioId;
     }
 }
+

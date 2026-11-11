@@ -8,3 +8,4 @@ public enum ScenarioType {
     HIGH_OCCUPANCY,
     CUSTOM
 }
+

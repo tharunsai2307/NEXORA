@@ -16,3 +16,4 @@ public interface SensorReadingService {
 
     List<SensorReadingResponse> getLatestBuildingReadings(String buildingId);
 }
+

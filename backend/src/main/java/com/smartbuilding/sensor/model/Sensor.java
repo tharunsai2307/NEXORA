@@ -170,3 +170,4 @@ public class Sensor {
         this.updatedAt = updatedAt;
     }
 }
+

@@ -28,3 +28,4 @@ public interface SensorReadingRepository extends JpaRepository<SensorReading, St
            "WHERE b.id = :buildingId ORDER BY sr.recordedAt DESC")
     List<SensorReading> findRecentByBuildingId(@Param("buildingId") String buildingId, Pageable pageable);
 }
+

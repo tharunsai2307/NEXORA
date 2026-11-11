@@ -112,3 +112,4 @@ public class SimulationScenarioResponse {
         this.endedAt = endedAt;
     }
 }
+

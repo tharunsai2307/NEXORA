@@ -48,3 +48,4 @@ public class ScenarioRequest {
         this.durationSeconds = durationSeconds;
     }
 }
+

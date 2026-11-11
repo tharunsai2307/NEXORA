@@ -117,3 +117,4 @@ public class SensorController {
         return ResponseEntity.ok(ApiResponse.success("Sensor statistics retrieved", stats));
     }
 }
+

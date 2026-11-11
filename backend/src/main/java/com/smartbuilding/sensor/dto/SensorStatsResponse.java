@@ -81,3 +81,4 @@ public class SensorStatsResponse {
         this.distributionByType = distributionByType;
     }
 }
+

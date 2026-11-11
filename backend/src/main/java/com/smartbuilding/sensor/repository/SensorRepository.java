@@ -40,3 +40,4 @@ public interface SensorRepository extends JpaRepository<Sensor, String> {
     @Query("SELECT s FROM Sensor s JOIN s.room r JOIN r.floor f WHERE f.id = :floorId")
     List<Sensor> findByFloorId(@Param("floorId") String floorId);
 }
+

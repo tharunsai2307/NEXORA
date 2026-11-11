@@ -90,11 +90,11 @@ export const Sidebar: React.FC = () => {
         <div className="mx-4 my-3 p-2.5 bg-[#0e1624] border border-[#1e2e47] rounded-lg">
           <div className="flex items-center justify-between text-[11px] mb-1">
             <span className="text-slate-400 font-medium">Milestone</span>
-            <span className="font-mono text-emerald-400 font-semibold">Phase 2 of 7</span>
+            <span className="font-mono text-emerald-400 font-semibold">Phase 4 of 7</span>
           </div>
-          <div className="text-[10px] text-slate-400">Auth & Building Management</div>
+          <div className="text-[10px] text-slate-400">Edge AI Intelligence</div>
           <div className="w-full bg-[#182337] h-1.5 rounded-full mt-2 overflow-hidden">
-            <div className="bg-gradient-to-r from-emerald-500 to-cyan-400 h-full w-[28%]"></div>
+            <div className="bg-gradient-to-r from-emerald-500 to-cyan-400 h-full w-[57%]"></div>
           </div>
         </div>
 

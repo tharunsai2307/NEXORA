@@ -219,3 +219,4 @@ public class SensorResponse {
         this.createdAt = createdAt;
     }
 }
+

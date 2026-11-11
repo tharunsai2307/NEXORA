@@ -15,3 +15,4 @@ public interface SimulationScenarioRepository extends JpaRepository<SimulationSc
 
     List<SimulationScenario> findBySessionIdOrderByStartedAtDesc(String sessionId);
 }
+

@@ -70,3 +70,4 @@ export interface SensorStats {
   activeSessionId?: string | null;
   distributionByType: Record<string, number>;
 }
+

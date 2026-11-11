@@ -28,6 +28,15 @@ import {
   ScenarioPayload,
   ScenarioDefinition,
 } from '../types/simulation';
+import {
+  AnomalyDetection,
+  AiPrediction,
+  RiskAssessment,
+  RoomAiOverview,
+  BuildingAiSummary,
+  AiModelMetadata,
+  AiModelStatus,
+} from '../types/ai';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1';
 
@@ -394,6 +403,79 @@ export const simulationApi = {
 
   async stopScenario(scenarioId: string): Promise<SimulationScenario> {
     const response = await apiClient.post<ApiResponse<SimulationScenario>>(`/scenarios/${scenarioId}/stop`);
+    return response.data.data;
+  },
+};
+
+export const aiApi = {
+  async analyzeRoom(roomId: string): Promise<RoomAiOverview> {
+    const response = await apiClient.post<ApiResponse<RoomAiOverview>>(`/ai/rooms/${roomId}/analyze`);
+    return response.data.data;
+  },
+
+  async analyzeBuilding(buildingId: string): Promise<BuildingAiSummary> {
+    const response = await apiClient.post<ApiResponse<BuildingAiSummary>>(`/ai/buildings/${buildingId}/analyze`);
+    return response.data.data;
+  },
+
+  async getRoomAiOverview(roomId: string): Promise<RoomAiOverview> {
+    const response = await apiClient.get<ApiResponse<RoomAiOverview>>(`/ai/rooms/${roomId}/latest`);
+    return response.data.data;
+  },
+
+  async getBuildingAiSummary(buildingId: string): Promise<BuildingAiSummary> {
+    const response = await apiClient.get<ApiResponse<BuildingAiSummary>>(`/ai/buildings/${buildingId}/summary`);
+    return response.data.data;
+  },
+
+  async getAnomalies(params?: {
+    buildingId?: string;
+    floorId?: string;
+    roomId?: string;
+    severity?: string;
+    page?: number;
+    size?: number;
+  }): Promise<{ content: AnomalyDetection[]; totalElements: number; totalPages: number }> {
+    const response = await apiClient.get<ApiResponse<{ content: AnomalyDetection[]; totalElements: number; totalPages: number }>>('/ai/anomalies', { params });
+    return response.data.data;
+  },
+
+  async getPredictions(params?: {
+    buildingId?: string;
+    roomId?: string;
+    page?: number;
+    size?: number;
+  }): Promise<{ content: AiPrediction[]; totalElements: number; totalPages: number }> {
+    const response = await apiClient.get<ApiResponse<{ content: AiPrediction[]; totalElements: number; totalPages: number }>>('/ai/predictions', { params });
+    return response.data.data;
+  },
+
+  async getRisks(params?: {
+    buildingId?: string;
+    riskLevel?: string;
+    page?: number;
+    size?: number;
+  }): Promise<{ content: RiskAssessment[]; totalElements: number; totalPages: number }> {
+    const response = await apiClient.get<ApiResponse<{ content: RiskAssessment[]; totalElements: number; totalPages: number }>>('/ai/risks', { params });
+    return response.data.data;
+  },
+
+  async getModels(): Promise<AiModelMetadata[]> {
+    const response = await apiClient.get<ApiResponse<AiModelMetadata[]>>('/ai/models');
+    return response.data.data;
+  },
+
+  async getModelStatus(): Promise<AiModelStatus> {
+    const response = await apiClient.get<ApiResponse<AiModelStatus>>('/ai/models/status');
+    return response.data.data;
+  },
+
+  async trainModels(payload?: {
+    synthetic_samples?: number;
+    contamination?: number;
+    force_retrain?: boolean;
+  }): Promise<any> {
+    const response = await apiClient.post<ApiResponse<any>>('/ai/models/train', payload || {});
     return response.data.data;
   },
 };

@@ -58,3 +58,4 @@ export interface ScenarioDefinition {
   description: string;
   severity: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' | 'VARIABLE';
 }
+

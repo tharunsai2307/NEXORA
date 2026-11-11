@@ -30,3 +30,4 @@ public interface SimulationEngineService {
 
     boolean isSimulationRunning(String buildingId);
 }
+

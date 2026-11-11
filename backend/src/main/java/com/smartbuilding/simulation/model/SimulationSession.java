@@ -143,3 +143,4 @@ public class SimulationSession {
         this.stoppedAt = stoppedAt;
     }
 }
+

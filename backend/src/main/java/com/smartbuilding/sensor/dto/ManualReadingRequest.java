@@ -21,3 +21,4 @@ public class ManualReadingRequest {
         this.readingValue = readingValue;
     }
 }
+

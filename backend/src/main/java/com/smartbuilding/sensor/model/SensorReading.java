@@ -95,3 +95,4 @@ public class SensorReading {
         this.scenarioId = scenarioId;
     }
 }
+

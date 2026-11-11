@@ -51,3 +51,4 @@ public class SensorReadingController {
         return ResponseEntity.ok(ApiResponse.success("Latest building sensor readings retrieved", readings));
     }
 }
+

@@ -7,3 +7,4 @@ public enum SensorType {
     AIR_QUALITY,
     OCCUPANCY
 }
+

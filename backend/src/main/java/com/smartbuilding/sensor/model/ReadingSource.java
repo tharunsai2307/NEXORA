@@ -4,3 +4,4 @@ public enum ReadingSource {
     SIMULATED,
     MANUAL
 }
+

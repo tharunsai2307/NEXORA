@@ -28,3 +28,4 @@ public interface RiskAssessmentRepository extends JpaRepository<RiskAssessment, 
 
     long countByRoomFloorBuildingIdAndRiskLevel(String buildingId, String riskLevel);
 }
+

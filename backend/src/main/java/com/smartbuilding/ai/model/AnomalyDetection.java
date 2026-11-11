@@ -84,3 +84,4 @@ public class AnomalyDetection {
     public Instant getDetectedAt() { return detectedAt; }
     public void setDetectedAt(Instant detectedAt) { this.detectedAt = detectedAt; }
 }
+

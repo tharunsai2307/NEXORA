@@ -24,3 +24,4 @@ class AnomalyInferenceResponse(BaseModel):
     contributing_features: Dict[str, float]
     explanation: str
     model_version: str
+

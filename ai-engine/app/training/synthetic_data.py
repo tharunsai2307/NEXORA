@@ -145,3 +145,4 @@ def generate_synthetic_occupancy_dataset(n_samples: int = 2400) -> Tuple[np.ndar
         y_list.append(target_occ)
 
     return np.array(X_list, dtype=float), np.array(y_list, dtype=float)
+

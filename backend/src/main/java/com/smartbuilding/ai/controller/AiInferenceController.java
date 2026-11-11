@@ -110,3 +110,4 @@ public class AiInferenceController {
         return ResponseEntity.ok(ApiResponse.success("AI models retrained successfully", response));
     }
 }
+

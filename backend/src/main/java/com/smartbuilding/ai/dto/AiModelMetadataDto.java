@@ -12,3 +12,4 @@ public record AiModelMetadataDto(
         @JsonProperty("performance_metrics") Map<String, Object> performanceMetrics,
         @JsonProperty("model_status") String modelStatus
 ) {}
+

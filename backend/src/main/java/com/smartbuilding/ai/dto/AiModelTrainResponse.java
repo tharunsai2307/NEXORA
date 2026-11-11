@@ -11,3 +11,4 @@ public record AiModelTrainResponse(
         Map<String, Object> metrics,
         String timestamp
 ) {}
+

@@ -128,3 +128,4 @@ export interface AiModelStatus {
   total_models: number;
   system_status: string;
 }
+

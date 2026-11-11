@@ -8,3 +8,4 @@ public record AiModelStatusResponse(
         @JsonProperty("total_models") Integer totalModels,
         @JsonProperty("system_status") String systemStatus
 ) {}
+

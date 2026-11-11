@@ -13,3 +13,4 @@ public record OccupancyPredictionRequest(
         @JsonProperty("day_of_week") Integer dayOfWeek,
         @JsonProperty("prediction_horizon_minutes") Integer predictionHorizonMinutes
 ) {}
+

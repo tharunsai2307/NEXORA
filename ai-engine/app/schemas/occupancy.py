@@ -23,3 +23,4 @@ class OccupancyPredictionResponse(BaseModel):
     model_version: str
     status: str = Field(default="SUCCESS", description="SUCCESS or INSUFFICIENT_DATA")
     confidence_score: float = Field(default=0.92, ge=0.0, le=1.0)
+

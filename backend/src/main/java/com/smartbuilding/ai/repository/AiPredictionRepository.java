@@ -23,3 +23,4 @@ public interface AiPredictionRepository extends JpaRepository<AiPrediction, Stri
     @Query("SELECT p FROM AiPrediction p WHERE p.room.id = :roomId ORDER BY p.predictionTimestamp DESC")
     Page<AiPrediction> findPagedByRoomId(@Param("roomId") String roomId, Pageable pageable);
 }
+

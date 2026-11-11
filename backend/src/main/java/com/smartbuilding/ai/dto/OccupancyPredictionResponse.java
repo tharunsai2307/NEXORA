@@ -13,3 +13,4 @@ public record OccupancyPredictionResponse(
         String status,
         @JsonProperty("confidence_score") Double confidenceScore
 ) {}
+

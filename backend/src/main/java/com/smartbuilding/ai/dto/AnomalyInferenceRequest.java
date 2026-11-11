@@ -15,3 +15,4 @@ public record AnomalyInferenceRequest(
         @JsonProperty("smoke_recent_avg") Double smokeRecentAvg,
         String timestamp
 ) {}
+

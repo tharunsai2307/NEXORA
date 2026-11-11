@@ -30,3 +30,4 @@ class ModelTrainResponse(BaseModel):
     trained_models: List[str]
     metrics: Dict[str, Any]
     timestamp: str
+

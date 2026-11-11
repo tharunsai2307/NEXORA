@@ -37,6 +37,11 @@ import {
   AiModelMetadata,
   AiModelStatus,
 } from '../types/ai';
+import {
+  DigitalTwinBuilding,
+  DigitalTwinRoom,
+  RoomLayoutUpdatePayload,
+} from '../types/digitaltwin';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1';
 
@@ -476,6 +481,18 @@ export const aiApi = {
     force_retrain?: boolean;
   }): Promise<any> {
     const response = await apiClient.post<ApiResponse<any>>('/ai/models/train', payload || {});
+    return response.data.data;
+  },
+};
+
+export const digitalTwinApi = {
+  async getBuildingTwin(buildingId: string): Promise<DigitalTwinBuilding> {
+    const response = await apiClient.get<ApiResponse<DigitalTwinBuilding>>(`/digital-twin/buildings/${buildingId}`);
+    return response.data.data;
+  },
+
+  async updateRoomLayout(roomId: string, payload: RoomLayoutUpdatePayload): Promise<DigitalTwinRoom> {
+    const response = await apiClient.put<ApiResponse<DigitalTwinRoom>>(`/digital-twin/rooms/${roomId}/layout`, payload);
     return response.data.data;
   },
 };

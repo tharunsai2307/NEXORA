@@ -195,3 +195,4 @@ class AnomalyDetector:
             explanation=explanation,
             model_version=self.MODEL_VERSION,
         )
+

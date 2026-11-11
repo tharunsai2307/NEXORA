@@ -161,3 +161,4 @@ class OccupancyPredictor:
             status=status,
             confidence_score=confidence,
         )
+

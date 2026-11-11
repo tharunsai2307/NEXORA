@@ -30,3 +30,4 @@ public interface AnomalyDetectionRepository extends JpaRepository<AnomalyDetecti
 
     long countByRoomFloorBuildingIdAndSeverity(String buildingId, String severity);
 }
+

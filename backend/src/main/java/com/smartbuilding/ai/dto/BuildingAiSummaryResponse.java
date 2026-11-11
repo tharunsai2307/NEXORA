@@ -17,3 +17,4 @@ public record BuildingAiSummaryResponse(
         Map<String, Long> severityBreakdown,
         Instant lastAnalysisTimestamp
 ) {}
+

@@ -27,3 +27,4 @@ class RiskAssessmentResponse(BaseModel):
     explanation: str
     assessment_timestamp: str
     critical_override: bool = Field(default=False, description="True if critical fire/smoke rule overrode the weighted average")
+

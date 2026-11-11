@@ -9,3 +9,4 @@ public record AiModelTrainRequest(
         Double contamination,
         @JsonProperty("force_retrain") Boolean forceRetrain
 ) {}
+

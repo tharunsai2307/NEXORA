@@ -14,3 +14,4 @@ public record RiskAssessmentRequest(
         @JsonProperty("is_anomaly") Boolean isAnomaly,
         @JsonProperty("anomaly_score") Double anomalyScore
 ) {}
+

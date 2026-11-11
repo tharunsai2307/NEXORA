@@ -56,3 +56,4 @@ class ModelTrainer:
                 "random_forest_occupancy": occ_metrics,
             }
         }
+

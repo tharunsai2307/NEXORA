@@ -13,3 +13,4 @@ public record AnomalyInferenceResponse(
         String explanation,
         @JsonProperty("model_version") String modelVersion
 ) {}
+

@@ -17,3 +17,4 @@ public record RiskAssessmentResponse(
         @JsonProperty("assessment_timestamp") String assessmentTimestamp,
         @JsonProperty("critical_override") Boolean criticalOverride
 ) {}
+

@@ -13,3 +13,4 @@ public interface AiModelMetadataRepository extends JpaRepository<AiModelMetadata
 
     Optional<AiModelMetadata> findByModelType(String modelType);
 }
+

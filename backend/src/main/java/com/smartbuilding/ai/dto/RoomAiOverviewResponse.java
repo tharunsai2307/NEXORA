@@ -24,3 +24,4 @@ public record RoomAiOverviewResponse(
         Map<String, Object> sensorSnapshots,
         Instant lastEvaluatedAt
 ) {}
+

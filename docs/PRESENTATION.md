@@ -111,3 +111,4 @@
 - BACnet / Modbus IP industrial building automation integration.
 - Direct BIM / IFC CAD blueprint ingestion.
 - Edge TPU / NPU quantization and deployment on embedded gateway nodes.
+

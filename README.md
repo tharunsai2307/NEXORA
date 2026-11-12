@@ -114,26 +114,42 @@ flowchart TD
 
 ---
 
-## 5. Quickstart Deployment Guide (Docker Compose)
+## 5. Quickstart Deployment Guide
 
-### 1. Clone the Repository
+### One-Click Launch on Windows (Standalone Development)
+Simply double-click [`open.bat`](./open.bat) (or run [`start.bat`](./start.bat) from PowerShell/CMD):
+```cmd
+open.bat
+```
+*What this does automatically:*
+- Detects and applies modern JDK 21+ (`JAVA_HOME`).
+- Configures thread-safety flags for Python 3.14 on Windows (`OPENBLAS_NUM_THREADS=1`).
+- Spawns the Python AI Engine (Port 8000), Java Spring Boot Backend (Port 8080 with in-memory DB & auto-seed), and React Frontend (Port 5173).
+- Launches your default web browser directly to `http://localhost:5173`.
+- To gracefully stop all background services when done, double-click [`stop.bat`](./stop.bat).
+
+---
+
+### Production Deployment via Docker Compose
+
+#### 1. Clone the Repository
 ```bash
 git clone https://github.com/tharunsai2307/NEXORA.git
 cd NEXORA
 ```
 
-### 2. Configure Environment Variables
+#### 2. Configure Environment Variables
 ```bash
 cp .env.example .env
 ```
 *(On Windows PowerShell, use `Copy-Item .env.example .env`)*
 
-### 3. Start Application
+#### 3. Start Application Containers
 ```bash
 docker compose up -d --build
 ```
 
-### 4. Access the Dashboard
+#### 4. Access the Dashboard
 Open your web browser and navigate to:
 ```
 http://localhost (or http://localhost:80)

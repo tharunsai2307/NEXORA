@@ -126,3 +126,4 @@ When safety officers toggle an evacuation corridor or stairwell as blocked (`POS
 1. **Crowd Congestion Dynamics:** The current algorithm computes shortest clear geometric distance with hazard penalties. It does not perform microscopic agent crowd-crush or bottleneck queuing simulations (e.g., Helbing’s Social Force Model).
 2. **Graph Initialization:** Default graphs are auto-provisioned based on floor room coordinates. In complex irregularly shaped architectural blueprints, nodes must be registered to match exact corridor geometry.
 3. **Simulated Emergency Context:** Path calculations are for academic demonstration and safety training drills. Real-world life-safety systems require hardwired NFPA-compliant egress annunciators and emergency lighting.
+

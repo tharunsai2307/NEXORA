@@ -84,7 +84,18 @@ Sign in using any preconfigured role:
 
 ## 3. Standalone Local Development Deployment
 
-If Docker is not installed on your development workstation, run the three standalone services locally:
+If Docker is not installed on your development workstation, you can run NEXORA using either the automated batch launcher or manual CLI commands.
+
+### 3.0 Automated Windows Launcher (Recommended)
+Simply double-click [`open.bat`](../open.bat) or [`start.bat`](../start.bat) in the project root:
+```cmd
+open.bat
+```
+This script handles JDK 21+ `JAVA_HOME` resolution, OpenBLAS thread safety, spawns the 3 microservices in dedicated terminal windows, seeds in-memory data, and automatically launches `http://localhost:5173` in your default browser. To stop all services, run [`stop.bat`](../stop.bat).
+
+---
+
+### Manual Standalone Service Startup
 
 ### 3.1 Start Python AI Service
 ```bash
@@ -166,3 +177,4 @@ docker compose exec postgres pg_dump -U smart_admin smart_building_db > nexora_b
 ```bash
 cat nexora_backup_20261112.sql | docker compose exec -T postgres psql -U smart_admin -d smart_building_db
 ```
+

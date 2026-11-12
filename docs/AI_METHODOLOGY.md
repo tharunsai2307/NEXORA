@@ -145,3 +145,4 @@ Models were evaluated on a synthetic validation benchmark consisting of 2,000 mu
 1. **Synthetic Training Baseline:** Models were trained on synthetically generated physical distributions based on ASHRAE building standards. While calibrated, physical building deployment would benefit from continuous transfer learning with real IoT hardware.
 2. **Prediction Horizon:** Occupancy forecasting is optimized for a short-term 15-minute horizon for real-time HVAC and egress coordination; long-range 24-hour predictions require separate seasonal ARIMA / LSTM architectures.
 3. **Simulated Academic Software:** NEXORA is a research and academic prototype. It is not certified under UL 864, NFPA 72, or EN 54 standards for physical fire alarm and life-safety dispatch.
+

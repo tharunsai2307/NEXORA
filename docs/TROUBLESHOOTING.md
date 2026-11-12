@@ -93,3 +93,4 @@ When investigating an issue, verify the health status of all four tiers in seque
 - **Symptom:** Python test or worker hangs indefinitely during `predict()` or `score_samples()`.
 - **Cause:** `n_jobs=-1` attempts to spawn process pools on Windows IOCP loops without fork support.
 - **Resolution:** This was resolved in Phase 8 by setting `n_jobs=1` across all estimators in `anomaly_detector.py` and `occupancy_predictor.py`. Ensure you are running the latest codebase.
+

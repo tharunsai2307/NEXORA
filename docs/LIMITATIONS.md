@@ -48,3 +48,4 @@ If transitioned to commercial deployment, the following enhancements are planned
 - [ ] **Microscopic Agent Crowd Simulation:** Integration with OpenABM or custom WebGPU compute shaders to model individual occupant panic and door congestion dynamics.
 - [ ] **Edge TPU & NPU Acceleration:** Deploy quantization-optimized models (ONNX / TensorFlow Lite) onto embedded Coral Edge TPUs or NVIDIA Jetson gateway hardware located on each floor.
 - [ ] **Mobile AR Egress Navigator:** Augmented Reality (AR) mobile application guiding building occupants to the nearest safe exit using phone cameras and WebXR.
+

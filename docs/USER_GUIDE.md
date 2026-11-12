@@ -80,3 +80,4 @@ NEXORA implements strict Role-Based Access Control (RBAC):
   - Click **"Generate AI Post-Mortem Draft"** to synthesize timeline narratives, sensor min/max/average statistics, and root cause assessments.
   - Edit corrective action items, mark report as **"REVIEWED"** or **"FINALIZED"**.
 - **Executive PDF Export:** Click **"Download Official PDF"** to stream a formal, formatted executive incident report.
+

@@ -86,13 +86,16 @@ export const Sidebar: React.FC = () => {
           </div>
         </div>
 
-        {/* Phase Indicator */}
+        {/* System Operations Status */}
         <div className="mx-4 my-3 p-2.5 bg-[#0e1624] border border-[#1e2e47] rounded-lg">
           <div className="flex items-center justify-between text-[11px] mb-1">
-            <span className="text-slate-400 font-medium">Milestone</span>
-            <span className="font-mono text-emerald-400 font-semibold">Phase 7 of 7</span>
+            <span className="text-slate-400 font-medium">System Status</span>
+            <span className="font-mono text-emerald-400 font-semibold flex items-center gap-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              ONLINE
+            </span>
           </div>
-          <div className="text-[10px] text-slate-400">Analytics & Post-Mortem</div>
+          <div className="text-[10px] text-slate-400">Edge AI & Telemetry Active</div>
           <div className="w-full bg-[#182337] h-1.5 rounded-full mt-2 overflow-hidden">
             <div className="bg-gradient-to-r from-emerald-500 to-cyan-400 h-full w-[100%]"></div>
           </div>

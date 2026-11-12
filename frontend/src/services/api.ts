@@ -141,6 +141,21 @@ export const systemService = {
     const response = await apiClient.get<ApiResponse<DashboardStats>>('/system/dashboard-stats');
     return response.data.data;
   },
+
+  async purgeTelemetry(): Promise<string> {
+    const response = await apiClient.post<ApiResponse<string>>('/system/purge-telemetry');
+    return response.data.data;
+  },
+
+  async clearFacilityData(): Promise<string> {
+    const response = await apiClient.post<ApiResponse<string>>('/system/clear-facility-data');
+    return response.data.data;
+  },
+
+  async seedBaselineData(): Promise<string> {
+    const response = await apiClient.post<ApiResponse<string>>('/system/seed-baseline-data');
+    return response.data.data;
+  },
 };
 
 export const authApi = {

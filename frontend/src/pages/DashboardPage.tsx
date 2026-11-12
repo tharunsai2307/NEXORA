@@ -60,7 +60,7 @@ export const DashboardPage: React.FC = () => {
             NEXORA Digital Twin Infrastructure
           </h1>
           <p className="text-xs text-slate-400 mt-1 max-w-2xl leading-relaxed">
-            Phase 2 Authenticated Foundation · Multi-tenant building topology, role-based spatial management, and real-time backend telemetry bridge.
+            Centralized telemetry operations, multi-tenant building topology, spatial digital twins, and real-time AI safety monitoring.
           </p>
         </div>
 
@@ -92,7 +92,7 @@ export const DashboardPage: React.FC = () => {
           value={stats ? `${stats.totalBuildings} Buildings` : statsLoading ? 'Loading...' : '0 Buildings'}
           subtitle={stats ? `${stats.totalFloors} configured floor levels` : 'Hierarchical levels'}
           icon={Building2}
-          badge={{ text: 'Phase 2 Live', variant: 'cyan' }}
+          badge={{ text: 'Operational', variant: 'cyan' }}
         />
         <MetricCard
           title="Partitioned Spaces"

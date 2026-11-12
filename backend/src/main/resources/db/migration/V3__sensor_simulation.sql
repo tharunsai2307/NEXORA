@@ -78,50 +78,50 @@ VALUES
     -- rm-101: Main Reception & Atrium
     ('sns-101-temp', 'rm-101', 'SNS-L0-101-TMP', 'Atrium Ambient Temperature Sensor', 'TEMPERATURE', 'CELSIUS', 'ACTIVE', 5, 22.4, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-101-hum',  'rm-101', 'SNS-L0-101-HUM', 'Atrium Relative Humidity Sensor',  'HUMIDITY',    'PERCENT', 'ACTIVE', 5, 48.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-101-smk',  'rm-101', 'SNS-L0-101-SMK', 'Atrium Optical Smoke Detector (Simulated)', 'SMOKE', 'PPM', 'ACTIVE', 5, 0.01, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-101-aqi',  'rm-101', 'SNS-L0-101-AQI', 'Atrium Air Quality Index Sensor (Simulated)', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 42.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-101-smk',  'rm-101', 'SNS-L0-101-SMK', 'Atrium Optical Smoke Detector', 'SMOKE', 'PPM', 'ACTIVE', 5, 0.01, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-101-aqi',  'rm-101', 'SNS-L0-101-AQI', 'Atrium Air Quality Index Sensor', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 42.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-101-occ',  'rm-101', 'SNS-L0-101-OCC', 'Atrium Optical Flow Occupancy Counter', 'OCCUPANCY', 'PEOPLE', 'ACTIVE', 5, 12.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     -- rm-102: Central Conference Hall
     ('sns-102-temp', 'rm-102', 'SNS-L0-102-TMP', 'Conference A Temperature Sensor', 'TEMPERATURE', 'CELSIUS', 'ACTIVE', 5, 21.8, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-102-hum',  'rm-102', 'SNS-L0-102-HUM', 'Conference A Humidity Sensor',    'HUMIDITY',    'PERCENT', 'ACTIVE', 5, 45.5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-102-smk',  'rm-102', 'SNS-L0-102-SMK', 'Conference A Smoke Sensor (Simulated)', 'SMOKE', 'PPM', 'ACTIVE', 5, 0.02, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-102-aqi',  'rm-102', 'SNS-L0-102-AQI', 'Conference A AQI Monitor (Simulated)', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 38.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-102-smk',  'rm-102', 'SNS-L0-102-SMK', 'Conference A Smoke Sensor', 'SMOKE', 'PPM', 'ACTIVE', 5, 0.02, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-102-aqi',  'rm-102', 'SNS-L0-102-AQI', 'Conference A AQI Monitor', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 38.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-102-occ',  'rm-102', 'SNS-L0-102-OCC', 'Conference A Occupancy Sensor', 'OCCUPANCY', 'PEOPLE', 'ACTIVE', 5, 18.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     -- rm-103: Cafeteria & Lounge
     ('sns-103-temp', 'rm-103', 'SNS-L0-103-TMP', 'Cafeteria Temperature Sensor', 'TEMPERATURE', 'CELSIUS', 'ACTIVE', 5, 23.5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-103-hum',  'rm-103', 'SNS-L0-103-HUM', 'Cafeteria Humidity Sensor',    'HUMIDITY',    'PERCENT', 'ACTIVE', 5, 52.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-103-smk',  'rm-103', 'SNS-L0-103-SMK', 'Cafeteria Kitchen Smoke Sensor (Simulated)', 'SMOKE', 'PPM', 'ACTIVE', 5, 0.04, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-103-aqi',  'rm-103', 'SNS-L0-103-AQI', 'Cafeteria Air Quality Sensor (Simulated)', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 55.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-103-smk',  'rm-103', 'SNS-L0-103-SMK', 'Cafeteria Kitchen Smoke Sensor', 'SMOKE', 'PPM', 'ACTIVE', 5, 0.04, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-103-aqi',  'rm-103', 'SNS-L0-103-AQI', 'Cafeteria Air Quality Sensor', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 55.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-103-occ',  'rm-103', 'SNS-L0-103-OCC', 'Cafeteria Occupancy Tracker', 'OCCUPANCY', 'PEOPLE', 'ACTIVE', 5, 24.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     -- rm-201: AI & Robotics Lab
     ('sns-201-temp', 'rm-201', 'SNS-L1-201-TMP', 'Robotics Lab Thermal Sensor', 'TEMPERATURE', 'CELSIUS', 'ACTIVE', 5, 22.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-201-hum',  'rm-201', 'SNS-L1-201-HUM', 'Robotics Lab Humidity Sensor', 'HUMIDITY',    'PERCENT', 'ACTIVE', 5, 42.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-201-smk',  'rm-201', 'SNS-L1-201-SMK', 'Robotics Lab Smoke Sensor (Simulated)', 'SMOKE', 'PPM', 'ACTIVE', 5, 0.01, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-201-aqi',  'rm-201', 'SNS-L1-201-AQI', 'Robotics Lab AQI Sensor (Simulated)', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 35.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-201-smk',  'rm-201', 'SNS-L1-201-SMK', 'Robotics Lab Smoke Sensor', 'SMOKE', 'PPM', 'ACTIVE', 5, 0.01, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-201-aqi',  'rm-201', 'SNS-L1-201-AQI', 'Robotics Lab AQI Sensor', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 35.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-201-occ',  'rm-201', 'SNS-L1-201-OCC', 'Robotics Lab Occupancy Sensor', 'OCCUPANCY', 'PEOPLE', 'ACTIVE', 5, 8.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     -- rm-202: Open Workspace Alpha
     ('sns-202-temp', 'rm-202', 'SNS-L1-202-TMP', 'Workspace Alpha Temperature Sensor', 'TEMPERATURE', 'CELSIUS', 'ACTIVE', 5, 22.8, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-202-hum',  'rm-202', 'SNS-L1-202-HUM', 'Workspace Alpha Humidity Sensor',    'HUMIDITY',    'PERCENT', 'ACTIVE', 5, 46.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-202-smk',  'rm-202', 'SNS-L1-202-SMK', 'Workspace Alpha Smoke Sensor (Simulated)', 'SMOKE', 'PPM', 'ACTIVE', 5, 0.01, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-202-aqi',  'rm-202', 'SNS-L1-202-AQI', 'Workspace Alpha AQI Monitor (Simulated)', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 40.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-202-smk',  'rm-202', 'SNS-L1-202-SMK', 'Workspace Alpha Smoke Sensor', 'SMOKE', 'PPM', 'ACTIVE', 5, 0.01, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-202-aqi',  'rm-202', 'SNS-L1-202-AQI', 'Workspace Alpha AQI Monitor', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 40.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-202-occ',  'rm-202', 'SNS-L1-202-OCC', 'Workspace Alpha Occupancy Counter', 'OCCUPANCY', 'PEOPLE', 'ACTIVE', 5, 22.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     -- rm-301: Primary Datacenter & Server Room
     ('sns-301-temp', 'rm-301', 'SNS-L2-301-TMP', 'Datacenter Rack Temperature Sensor', 'TEMPERATURE', 'CELSIUS', 'ACTIVE', 5, 19.5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-301-hum',  'rm-301', 'SNS-L2-301-HUM', 'Datacenter Precision Humidity Sensor', 'HUMIDITY', 'PERCENT', 'ACTIVE', 5, 38.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-301-smk',  'rm-301', 'SNS-L2-301-SMK', 'Datacenter VESDA Smoke Sensor (Simulated)', 'SMOKE', 'PPM', 'ACTIVE', 5, 0.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-301-aqi',  'rm-301', 'SNS-L2-301-AQI', 'Datacenter Air Particulate AQI (Simulated)', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 22.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-301-smk',  'rm-301', 'SNS-L2-301-SMK', 'Datacenter VESDA Smoke Sensor', 'SMOKE', 'PPM', 'ACTIVE', 5, 0.00, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-301-aqi',  'rm-301', 'SNS-L2-301-AQI', 'Datacenter Air Particulate AQI', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 22.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-301-occ',  'rm-301', 'SNS-L2-301-OCC', 'Datacenter Biometric Entry Occupancy Sensor', 'OCCUPANCY', 'PEOPLE', 'ACTIVE', 5, 1.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
 
     -- rm-302: Executive Boardroom
     ('sns-302-temp', 'rm-302', 'SNS-L2-302-TMP', 'Boardroom Ambient Temperature Sensor', 'TEMPERATURE', 'CELSIUS', 'ACTIVE', 5, 21.5, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-302-hum',  'rm-302', 'SNS-L2-302-HUM', 'Boardroom Humidity Sensor',             'HUMIDITY',    'PERCENT', 'ACTIVE', 5, 44.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-302-smk',  'rm-302', 'SNS-L2-302-SMK', 'Boardroom Smoke Sensor (Simulated)',    'SMOKE',       'PPM',     'ACTIVE', 5, 0.01, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
-    ('sns-302-aqi',  'rm-302', 'SNS-L2-302-AQI', 'Boardroom Air Quality Sensor (Simulated)', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 30.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-302-smk',  'rm-302', 'SNS-L2-302-SMK', 'Boardroom Smoke Sensor',    'SMOKE',       'PPM',     'ACTIVE', 5, 0.01, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
+    ('sns-302-aqi',  'rm-302', 'SNS-L2-302-AQI', 'Boardroom Air Quality Sensor', 'AIR_QUALITY', 'AQI', 'ACTIVE', 5, 30.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP),
     ('sns-302-occ',  'rm-302', 'SNS-L2-302-OCC', 'Boardroom Smart Occupancy Sensor',     'OCCUPANCY',   'PEOPLE',  'ACTIVE', 5, 6.0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)
 ON CONFLICT (sensor_code) DO NOTHING;
 

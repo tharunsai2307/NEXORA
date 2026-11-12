@@ -132,3 +132,4 @@ echo.
 echo Stopping NEXORA services...
 call "%~dp0stop.bat"
 exit /b 0
+

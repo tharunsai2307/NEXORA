@@ -41,3 +41,4 @@ echo [DONE] All NEXORA services have been stopped.
 echo ====================================================================
 echo.
 pause
+

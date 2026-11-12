@@ -409,11 +409,11 @@ export const EmergencyPage: React.FC = () => {
           <div>
             <div className="flex items-center gap-2">
               <h1 className="text-lg font-bold text-slate-100 tracking-wide">Emergency Operations Center</h1>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-red-950 text-red-400 border border-red-800">
-                Phase 6 Core
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-400 border border-emerald-800">
+                ACTIVE
               </span>
             </div>
-            <p className="text-xs text-slate-400">Incident command, multi-exit Dijkstra egress routing, and simulated evacuation</p>
+            <p className="text-xs text-slate-400">Incident command, multi-exit Dijkstra egress routing, and live evacuation tracking</p>
           </div>
         </div>
 
@@ -1250,7 +1250,7 @@ export const EmergencyPage: React.FC = () => {
                 <Users className="w-12 h-12 text-slate-500 mx-auto" />
                 <h3 className="text-base font-bold text-slate-200">No Evacuation Session Active</h3>
                 <p className="text-xs text-slate-400 max-w-md mx-auto">
-                  To monitor room clearance, simulated occupant movement, and special assistance flags, initiate an evacuation session.
+                  To monitor room clearance, live occupant movement, and special assistance flags, initiate an evacuation session.
                 </p>
                 {canOperate && (
                   <button

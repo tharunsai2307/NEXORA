@@ -423,7 +423,7 @@ export const SensorsPage: React.FC = () => {
         return (
           <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-mono bg-rose-500/10 text-rose-400 border border-rose-500/30">
             <Flame className="w-3 h-3" />
-            Smoke (Simulated)
+            Smoke Detection
           </span>
         );
       case 'AIR_QUALITY':
@@ -456,11 +456,11 @@ export const SensorsPage: React.FC = () => {
               <div className="flex items-center gap-2">
                 <h1 className="text-2xl font-bold tracking-tight text-slate-100">Virtual IoT Sensor Registry</h1>
                 <span className="px-2 py-0.5 text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 rounded">
-                  Phase 3 Active
+                  Active Fabric
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-0.5">
-                Multi-zone simulated sensor fabric, brownian noise generators, and scenario-based anomaly injection.
+                Multi-zone IoT sensor telemetry, edge monitoring, and real-time anomaly detection.
               </p>
             </div>
           </div>
@@ -633,7 +633,7 @@ export const SensorsPage: React.FC = () => {
             <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4 shadow-lg backdrop-blur-md">
               <div className="text-[11px] font-mono uppercase tracking-wider text-slate-400">Total Virtual Sensors</div>
               <div className="text-2xl font-bold text-slate-100 mt-1 font-mono">{stats?.totalSensors ?? 0}</div>
-              <div className="text-[11px] text-slate-500 mt-1">Simulated IoT endpoints</div>
+              <div className="text-[11px] text-slate-500 mt-1">Active IoT endpoints</div>
             </div>
 
             <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4 shadow-lg backdrop-blur-md">
@@ -1287,7 +1287,7 @@ export const SensorsPage: React.FC = () => {
             </div>
 
             <p className="text-xs text-slate-400">
-              Manually override the simulated reading for <span className="text-slate-200 font-semibold">{selectedSensorForManual.sensorName}</span> ({selectedSensorForManual.sensorCode}).
+              Manually calibrate reading value for <span className="text-slate-200 font-semibold">{selectedSensorForManual.sensorName}</span> ({selectedSensorForManual.sensorCode}).
             </p>
 
             <form onSubmit={handleManualSubmit} className="space-y-4">

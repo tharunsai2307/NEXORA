@@ -250,7 +250,7 @@ public class EvacuationRoutingServiceImpl implements EvacuationRoutingService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public List<EvacuationRouteResponse> getBuildingRoutes(String buildingId) {
         List<EvacuationRoute> routes = routeRepository.findByBuildingId(buildingId);
         if (routes.isEmpty()) {

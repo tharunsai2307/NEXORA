@@ -51,6 +51,8 @@ class OccupancyPredictor:
         if os.path.exists(self.model_path):
             try:
                 self.model = joblib.load(self.model_path)
+                if hasattr(self.model, "n_jobs"):
+                    self.model.n_jobs = 1
                 self.is_ready = True
                 logger.info(f"Loaded existing Random Forest model from {self.model_path}")
                 return
@@ -61,7 +63,7 @@ class OccupancyPredictor:
             n_estimators=100,
             max_depth=12,
             random_state=42,
-            n_jobs=-1
+            n_jobs=1
         )
         self.is_ready = False
 

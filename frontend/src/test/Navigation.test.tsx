@@ -31,6 +31,33 @@ vi.mock('../services/api', () => ({
   userApi: {
     listUsers: vi.fn(),
   },
+  analyticsApi: {
+    getOverview: vi.fn().mockResolvedValue({}),
+    getSensorAnalytics: vi.fn().mockResolvedValue({}),
+    getOccupancyAnalytics: vi.fn().mockResolvedValue({}),
+    getAiAnalytics: vi.fn().mockResolvedValue({}),
+    getIncidentAnalytics: vi.fn().mockResolvedValue({}),
+    getEvacuationAnalytics: vi.fn().mockResolvedValue({}),
+    getHistoricalTelemetry: vi.fn().mockResolvedValue({}),
+    generatePostMortem: vi.fn().mockResolvedValue({}),
+  },
+  reportsApi: {
+    generateReport: vi.fn().mockResolvedValue({}),
+    getRecentReports: vi.fn().mockResolvedValue([]),
+    downloadReport: vi.fn(),
+  },
+  aiApi: {
+    getHealth: vi.fn().mockResolvedValue({ status: 'UP' }),
+    getInfo: vi.fn().mockResolvedValue({}),
+    getModels: vi.fn().mockResolvedValue([]),
+  },
+  sensorApi: {
+    getSensors: vi.fn().mockResolvedValue([]),
+  },
+  emergencyApi: {
+    getEmergencyStatus: vi.fn().mockResolvedValue({}),
+    getIncidents: vi.fn().mockResolvedValue([]),
+  },
   apiClient: {},
 }));
 
@@ -86,7 +113,7 @@ describe('Authenticated Navigation Routes', () => {
 
   it('navigates to Buildings route when clicked', async () => {
     render(<App />);
-    await waitFor(() => expect(screen.getByText('Phase 2 of 7')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Phase 7 of 7')).toBeInTheDocument());
 
     const link = screen.getByRole('link', { name: /Buildings/i });
     fireEvent.click(link);
@@ -95,7 +122,7 @@ describe('Authenticated Navigation Routes', () => {
 
   it('navigates to Sensors route when clicked', async () => {
     render(<App />);
-    await waitFor(() => expect(screen.getByText('Phase 2 of 7')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Phase 7 of 7')).toBeInTheDocument());
 
     const link = screen.getByRole('link', { name: /Sensors/i });
     fireEvent.click(link);
@@ -104,52 +131,52 @@ describe('Authenticated Navigation Routes', () => {
 
   it('navigates to Digital Twin route when clicked', async () => {
     render(<App />);
-    await waitFor(() => expect(screen.getByText('Phase 2 of 7')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Phase 7 of 7')).toBeInTheDocument());
 
     const link = screen.getByRole('link', { name: /Digital Twin/i });
     fireEvent.click(link);
-    expect(await screen.findByText('Interactive 3D Digital Twin Viewer')).toBeInTheDocument();
+    expect(await screen.findByText(/3D Building Digital Twin/i)).toBeInTheDocument();
   });
 
   it('navigates to Occupancy route when clicked', async () => {
     render(<App />);
-    await waitFor(() => expect(screen.getByText('Phase 2 of 7')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Phase 7 of 7')).toBeInTheDocument());
 
     const link = screen.getByRole('link', { name: /Occupancy/i });
     fireEvent.click(link);
-    expect(await screen.findByText('Edge-AI Occupancy Prediction & Analytics')).toBeInTheDocument();
+    expect(await screen.findByText(/Occupancy Prediction & Spatial Dynamics/i)).toBeInTheDocument();
   });
 
   it('navigates to Safety route when clicked', async () => {
     render(<App />);
-    await waitFor(() => expect(screen.getByText('Phase 2 of 7')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Phase 7 of 7')).toBeInTheDocument());
 
     const link = screen.getByRole('link', { name: /Safety/i });
     fireEvent.click(link);
-    expect(await screen.findByText('Environmental Safety & Anomaly Detection')).toBeInTheDocument();
+    expect(await screen.findByText(/Building Safety & Environmental Risk Hub/i)).toBeInTheDocument();
   });
 
   it('navigates to Emergency route when clicked', async () => {
     render(<App />);
-    await waitFor(() => expect(screen.getByText('Phase 2 of 7')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Phase 7 of 7')).toBeInTheDocument());
 
     const link = screen.getByRole('link', { name: /Emergency/i });
     fireEvent.click(link);
-    expect(await screen.findByText('Emergency Response & Evacuation Routing')).toBeInTheDocument();
+    expect(await screen.findByText(/Emergency Operations Center/i)).toBeInTheDocument();
   });
 
   it('navigates to Analytics route when clicked', async () => {
     render(<App />);
-    await waitFor(() => expect(screen.getByText('Phase 2 of 7')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Phase 7 of 7')).toBeInTheDocument());
 
     const link = screen.getByRole('link', { name: /Analytics/i });
     fireEvent.click(link);
-    expect(await screen.findByText('Historical Telemetry & Building Analytics')).toBeInTheDocument();
+    expect(await screen.findByText(/NEXORA Analytics & Reporting Engine/i)).toBeInTheDocument();
   });
 
   it('navigates to Settings route when clicked', async () => {
     render(<App />);
-    await waitFor(() => expect(screen.getByText('Phase 2 of 7')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Phase 7 of 7')).toBeInTheDocument());
 
     const link = screen.getByRole('link', { name: /Settings/i });
     fireEvent.click(link);
@@ -158,7 +185,7 @@ describe('Authenticated Navigation Routes', () => {
 
   it('navigates to User Directory for SYSTEM_ADMIN when clicked', async () => {
     render(<App />);
-    await waitFor(() => expect(screen.getByText('Phase 2 of 7')).toBeInTheDocument());
+    await waitFor(() => expect(screen.getByText('Phase 7 of 7')).toBeInTheDocument());
 
     const link = screen.getByRole('link', { name: /User Directory/i });
     fireEvent.click(link);

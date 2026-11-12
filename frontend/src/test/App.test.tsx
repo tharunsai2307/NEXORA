@@ -95,7 +95,7 @@ describe('Application Bootstrap and Authentication Protection', () => {
     render(<App />);
 
     await waitFor(() => {
-      expect(screen.getByText('Phase 2 of 7')).toBeInTheDocument();
+      expect(screen.getByText('Phase 7 of 7')).toBeInTheDocument();
     });
 
     expect(screen.getByText('Navigation Console')).toBeInTheDocument();

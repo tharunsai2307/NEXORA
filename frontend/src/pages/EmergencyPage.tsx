@@ -157,7 +157,12 @@ export const EmergencyPage: React.FC = () => {
   useEffect(() => {
     if (!selectedBuildingId) return;
 
-    const wsUrl = `ws://${window.location.hostname}:8080/ws-raw`;
+    const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+    const wsUrl = import.meta.env.VITE_WS_URL || (
+      import.meta.env.PROD
+        ? `${protocol}//${window.location.host}/ws-raw`
+        : `ws://${window.location.hostname}:8080/ws-raw`
+    );
     let ws: WebSocket;
 
     try {

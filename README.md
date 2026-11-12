@@ -1,277 +1,181 @@
-# Edge-AI-Based Smart Building Safety and Occupancy Digital Twin System
+# NEXORA — Edge-AI-Based Smart Building Safety and Occupancy Digital Twin System
 
-> **Phase 1 Master Architectural Foundation**  
-> An enterprise-grade, microservice-based smart building simulation, predictive edge-AI, and interactive 3D digital twin platform.
-
----
-
-## 1. Project Overview
-
-The **Edge-AI-Based Smart Building Safety and Occupancy Digital Twin System** is an end-to-end software platform designed to simulate modern commercial smart buildings using virtual IoT sensors, process sensor streams with an enterprise Java backend, execute localized edge AI inference (predictive occupancy modeling and environmental anomaly detection) via a dedicated Python AI engine, persist historical data in PostgreSQL, and render real-time spatial telemetry through an interactive 3D WebGL digital twin.
-
-This implementation is software-only; no physical IoT hardware is required.
+> **Tagline:** *Intelligence Beyond Infrastructure.*  
+> An enterprise-grade, microservice-powered smart building intelligence platform combining high-throughput virtual IoT sensor simulation, local sub-50ms edge machine learning, browser-native 3D digital twins, and dynamic hazard-avoidance evacuation routing.
 
 ---
 
-## 2. System Architecture
+## 1. Executive Summary
 
-The project is structured as a **modular monorepo** containing three decoupled, independently runnable services and an isolated relational database:
+**NEXORA** is a software engineering capstone platform that bridges physical facility operations, edge artificial intelligence, interactive WebGL 3D digital twins, and automated life-safety incident response. 
 
-```
-┌────────────────────────────────┐
-│   React Frontend (Vite + TS)   │  Port 5173 / Nginx 80
-└───────────────┬────────────────┘
-                │  HTTP REST (/api/v1/*)
-                ▼
-┌────────────────────────────────┐
-│  Java Spring Boot Backend      │  Port 8080
-└───────┬────────────────┬───────┘
-        │                │
-        │ Internal HTTP  │ JPA / JDBC
-        ▼                ▼
-┌──────────────┐ ┌──────────────┐
-│  Python AI   │ │  PostgreSQL  │
-│  (FastAPI)   │ │  16 Database │
-│  Port 8000   │ │  Port 5432   │
-└──────────────┘ └──────────────┘
-```
+The system simulates a commercial facility with multi-modal virtual IoT sensors, streams high-frequency telemetry into a Java 21 Spring Boot core, executes localized sub-50ms machine learning inference via a Python FastAPI microservice, persists relational records in PostgreSQL across six Flyway schema migrations, and projects the facility into an interactive 3D digital twin rendered directly in the web browser.
 
-### Architectural Guardrails
-1. **Frontend Isolation**: The React client communicates exclusively with the Java backend via REST APIs. The frontend never accesses PostgreSQL or the Python AI service directly.
-2. **AI Engine Isolation**: The Python FastAPI service is a stateless intelligence tier. It never connects directly to PostgreSQL. Inference requests and telemetry are dispatched exclusively by the Java backend.
-3. **Database Single Custodian**: PostgreSQL is exclusively managed by the Java backend using Spring Data JPA and automated Flyway schema migrations.
+> **Academic & Simulation Disclaimer:** NEXORA is an academic engineering capstone prototype. All virtual IoT sensors, environmental metrics, crowd fluctuations, and evacuation progress counters are simulated algorithmically in software. Machine learning models were calibrated on synthetic physical baselines (ASHRAE/EPA standards). The system is not physically connected to building hardware and is not certified under NFPA 72 or UL 864 standards for physical fire alarm dispatch.
 
 ---
 
-## 3. Technology Stack
+## 2. Key Capabilities & Functional Pillars
 
-| Tier | Technologies |
-|---|---|
-| **Frontend** | React 18, TypeScript, Vite, Tailwind CSS, Three.js, React Three Fiber, React Three Drei, Lucide React, Axios, Vitest |
-| **Backend Core** | Java 21 LTS, Spring Boot 3.3.5, Spring Web, Spring Data JPA, Spring Security, Spring Actuator, Spring WebSocket, Flyway, PostgreSQL JDBC, JUnit 5, Mockito |
-| **Edge-AI Engine** | Python 3.11+, FastAPI, Uvicorn, Pydantic v2, NumPy, Pandas, Scikit-learn, Pytest, HTTPX |
-| **Database** | PostgreSQL 16 Alpine, Flyway Migration Engine, HikariCP Connection Pool |
-| **DevOps & Containers**| Docker, Docker Compose, Multi-stage Dockerfiles, Git, PowerShell scripts |
+1. **Role-Based Access Control & Topology:**
+   - Hierarchical structural models: Building $\to$ Floor $\to$ Room with 3D spatial bounding volumes `(x, y, z, width, depth, height)`.
+   - Four distinct user tiers: `SYSTEM_ADMIN`, `BUILDING_MANAGER`, `SAFETY_OFFICER`, and `OCCUPANT`.
+2. **Virtual IoT Fleet Simulation:**
+   - High-throughput scheduled background worker pools simulating 5 sensor categories: Temperature (°C), Humidity (%), Smoke Ionization (ppm), Air Quality (AQI), and Occupancy (Count).
+   - Injectable operational scenarios: Normal Ambient Drift, Heatwave / Thermal Spike, Fire Hazard / Smoke Event, Crowd Surge, and Sensor Degradation.
+3. **Edge AI Intelligence Microservice:**
+   - **Isolation Forest Anomaly Detector:** Unsupervised multi-modal anomaly scoring with contributing feature explanations.
+   - **Random Forest Occupancy Forecaster:** 100-tree ensemble predicting 15-minute future occupant density and space utilization.
+   - **Explainable Multi-Criteria Risk Engine:** Weighted composite safety scoring ($0 - 100$) with non-linear critical hazard overrides (Smoke $\ge 10\text{ ppm}$ or Temp $\ge 55^\circ\text{C}$).
+4. **Interactive 3D Building Digital Twin:**
+   - Browser-native WebGL rendering using Three.js and React Three Fiber.
+   - Interactive spatial orbit navigation, camera view presets (`TOP`, `FRONT`, `SIDE`, `RESET`), and real-time vertical floor separation slider ($0\text{m} - 15\text{m}$).
+   - Dynamic visual heatmaps for safety threat level, crowd utilization, and environmental metrics.
+5. **Emergency Operations Center & Dynamic Evacuation:**
+   - Full incident lifecycle tracking: `DETECTED` $\to$ `ACKNOWLEDGED` $\to$ `RESPONDING` $\to$ `RESOLVED` $\to$ `CLOSED`.
+   - Weighted Dijkstra pathfinding navigating occupants to nearest safe exterior exits while applying heavy detour penalties (+50m) to high-hazard zones and severing compromised paths.
+   - Interactive corridor blockade toggling with sub-5ms dynamic path recalculation broadcast live over WebSockets.
+6. **Analytics, Post-Mortem Studio & Management Reports:**
+   - Multi-series historical telemetry queries and interactive Recharts visualizations.
+   - Automated Incident Post-Mortem drafting with AI narrative generation, timeline construction, and root-cause assessment.
+   - Direct streaming PDF executive incident report generation.
 
 ---
 
-## 4. Repository Structure
+## 3. System Architecture
 
-```
-smart-building-digital-twin/
-│
-├── frontend/                     # React + TypeScript Vite frontend
-│   ├── src/
-│   │   ├── components/           # Common UI, ServiceStatusBadge, SystemStatusBar, MetricCard
-│   │   ├── pages/                # 9 structural routes (Dashboard, Buildings, Sensors, etc.)
-│   │   ├── layouts/              # AppLayout, Sidebar, Header
-│   │   ├── services/             # Axios API client (apiClient, systemService)
-│   │   ├── hooks/                # useSystemStatus polling & refresh hook
-│   │   ├── types/                # TypeScript interface definitions
-│   │   ├── utils/                # Formatters and helpers
-│   │   ├── test/                 # Vitest component & routing test suites
-│   │   ├── App.tsx               # Route definitions & router setup
-│   │   ├── main.tsx              # DOM root mount
-│   │   └── index.css             # Tailwind base & custom scrollbars
-│   ├── public/                   # SVG icons and static assets
-│   ├── Dockerfile                # Multi-stage production Nginx container
-│   ├── nginx.conf                # Nginx reverse proxy configuration
-│   ├── package.json              # Frontend dependencies
-│   ├── vite.config.ts            # Vite & Vitest configuration
-│   └── README.md
-│
-├── backend/                      # Java 21 Spring Boot core orchestrator
-│   ├── src/main/java/com/smartbuilding/
-│   │   ├── config/               # CorsConfig, SecurityConfig, AiClientConfig
-│   │   ├── common/               # ApiResponse, ErrorResponse, GlobalExceptionHandler
-│   │   ├── health/               # HealthController, SystemController, HealthService
-│   │   ├── ai/                   # AiServiceClient, REST bridge DTOs
-│   │   ├── building/             # Topology package (Phase 2)
-│   │   ├── sensor/               # Virtual IoT sensor package (Phase 3)
-│   │   ├── simulation/           # Sensor simulation engine (Phase 3)
-│   │   ├── occupancy/            # Occupancy analytics package (Phase 3/4)
-│   │   ├── safety/               # Environmental safety monitoring (Phase 4)
-│   │   ├── digitaltwin/          # 3D spatial state aggregator & WebSocket (Phase 5)
-│   │   ├── emergency/            # Evacuation routing & emergency alerts (Phase 6)
-│   │   ├── analytics/            # Long-term reporting package (Phase 7)
-│   │   └── SmartBuildingApplication.java
-│   ├── src/main/resources/
-│   │   ├── application.yml       # Production/development configuration
-│   │   └── db/migration/         # Flyway SQL migrations (V1__init_schema_foundation.sql)
-│   ├── src/test/                 # JUnit 5 & MockMvc automated test suites
-│   ├── Dockerfile                # Multi-stage Alpine container
-│   ├── pom.xml                   # Maven build descriptor
-│   └── README.md
-│
-├── ai-engine/                    # Python FastAPI Edge-AI intelligence microservice
-│   ├── app/
-│   │   ├── api/                  # Routes (/health, /info, /api/v1/inference/test)
-│   │   ├── schemas/              # Pydantic request & response validation schemas
-│   │   ├── services/             # InferenceService & business logic
-│   │   ├── models/               # ModelRegistry architecture placeholder
-│   │   ├── utils/                # Settings & structured logging
-│   │   └── main.py               # FastAPI application entrypoint
-│   ├── tests/                    # Pytest test suite (health, info, inference schemas)
-│   ├── Dockerfile                # Python 3.11-slim container
-│   ├── requirements.txt          # Pinned Python package dependencies
-│   └── README.md
-│
-├── database/                     # PostgreSQL configurations
-│   ├── init/                     # Initial container startup scripts (01-init.sql)
-│   └── README.md
-│
-├── docs/                         # Technical documentation
-│   ├── architecture/             # architecture.md with Mermaid diagrams
-│   ├── uml/                      # UML specifications placeholder
-│   ├── srs/                      # Software Requirements Specification
-│   └── testing/                  # Test execution logs and coverage details
-│
-├── scripts/                      # Developer automation scripts
-│   ├── run-tests.ps1             # Multi-tier automated test suite runner
-│   └── check-health.ps1          # Live HTTP health probe utility
-│
-├── .env.example                  # Environment variable blueprint
-├── .gitignore                    # Comprehensive multi-tier gitignore
-├── docker-compose.yml            # Multi-service container orchestration
-└── README.md                     # Root project documentation
+```mermaid
+flowchart TD
+    subgraph ClientTier ["Client Presentation Tier (Browser / Port 80)"]
+        UI["React 18 + TypeScript SPA\nTailwind CSS · Lucide Icons"]
+        Twin["3D Digital Twin Engine\nThree.js · React Three Fiber · Drei"]
+        WS["STOMP / WebSocket Client\nLive Telemetry Subscriptions"]
+    end
+
+    subgraph ReverseProxyTier ["Reverse Proxy Tier (Nginx Container)"]
+        Nginx["Nginx Reverse Proxy & Static Host\nPort 80 (Public Entrypoint)"]
+    end
+
+    subgraph CoreBackendTier ["Core Orchestration Tier (Spring Boot / Java 21)"]
+        Security["Spring Security 6 & JWT\nRole-Based Access Control"]
+        REST["REST API Controllers\nBuildings · Sensors · Incidents · Reports"]
+        Sim["Simulation Engine Service\nMulti-Threaded Scheduled Workers"]
+        Egress["Dynamic Evacuation Router\nWeighted Dijkstra Pathfinding"]
+        STOMP["STOMP Broker & Broadcaster\nReal-Time Telemetry Channels"]
+    end
+
+    subgraph EdgeAiTier ["Edge Intelligence Tier (FastAPI / Python)"]
+        FastAPI["FastAPI Microservice (Port 8000 Internal)\nScikit-Learn · NumPy · Pandas"]
+        IsoForest["Isolation Forest Anomaly Detector"]
+        RandForest["Random Forest Occupancy Forecaster"]
+        RiskEngine["Explainable Risk Scorer"]
+    end
+
+    subgraph DataTier ["Persistence Tier (PostgreSQL 16)"]
+        Flyway["Flyway Migration Engine\nSchema Versioning (V1 - V6)"]
+        Postgres[("PostgreSQL 16 Database\n(Port 5432 Internal)")]
+    end
+
+    ClientTier -->|"Port 80 (HTTP / WSS)"| Nginx
+    Nginx -->|"Static Files"| UI
+    Nginx -->|"Proxy /api/*"| REST
+    Nginx -->|"Proxy /ws-raw"| STOMP
+
+    REST --> Security
+    REST --> Sim
+    REST --> Egress
+    REST -->|"Internal REST"| FastAPI
+    REST -->|"Spring Data JPA / JDBC"| Postgres
+    Flyway --> Postgres
+    Sim --> STOMP
+    Egress --> STOMP
+
+    FastAPI --> IsoForest
+    FastAPI --> RandForest
+    FastAPI --> RiskEngine
 ```
 
 ---
 
-## 5. Ports and Service URLs
+## 4. Technology Stack Matrix
 
-| Service | Host / Internal Port | Base URL | Swagger / Web Interface |
-|---|---|---|---|
-| **Frontend** | `http://localhost:5173` | `http://localhost:5173` | Control Center Dashboard |
-| **Backend Core** | `http://localhost:8080` | `http://localhost:8080/api/v1` | Actuator: `http://localhost:8080/actuator` |
-| **AI Engine** | `http://localhost:8000` | `http://localhost:8000` | Swagger UI: `http://localhost:8000/docs` |
-| **PostgreSQL** | `localhost:5432` | `jdbc:postgresql://localhost:5432/smart_building_db` | Direct psql / JDBC |
-
----
-
-## 6. API Endpoint Reference
-
-### Java Backend Endpoints (`http://localhost:8080/api/v1`)
-- `GET /health`  
-  Returns `{ "status": "UP", "service": "smart-building-backend" }`
-- `GET /health/ai`  
-  Checks reachability of the Python AI service. Returns `200 OK` or `503 Service Unavailable`.
-- `GET /health/database`  
-  Verifies PostgreSQL connection pool validity. Returns `200 OK` or `503 Service Unavailable`.
-- `GET /system/info`  
-  Returns consolidated platform metadata: application name, version, backend status, database status, AI engine status, and runtime environment.
-
-### Python AI Service Endpoints (`http://localhost:8000`)
-- `GET /health`  
-  Returns `{ "status": "UP", "service": "smart-building-ai" }`
-- `GET /info`  
-  Returns service name, version, Python version, installed ML library versions (NumPy, Pandas, Scikit-learn), and model initialization status.
-- `POST /api/v1/inference/test`  
-  Validates request schema with Pydantic and returns structured echo response confirming Java-to-Python communication.
-- `GET /docs`  
-  Interactive OpenAPI / Swagger UI documentation.
+| Layer | Technologies & Frameworks | Version / Runtime | Purpose |
+| :--- | :--- | :--- | :--- |
+| **Frontend Core** | React, TypeScript, Vite, Tailwind CSS | React 18.3, TS 5.6 | Single Page Application UI & State Management |
+| **3D Digital Twin** | Three.js, React Three Fiber, Drei | Three 0.169, R3F 8.17 | WebGL interactive 3D spatial building twin |
+| **Data Visuals** | Recharts, Lucide Icons | Recharts 3.10 | Telemetry line/bar charts and SVG iconography |
+| **Backend Core** | Java 21 LTS, Spring Boot, Maven | Boot 3.3.5, Javac 21 | Core business orchestration, security & REST APIs |
+| **Security** | Spring Security 6, JJWT, BCrypt | JJWT 0.12.6 | Stateless JWT authorization & password hashing |
+| **Real-Time** | Spring WebSocket, STOMP, SockJS | STOMP 1.2 over WS | Bi-directional streaming telemetry and alert push |
+| **Edge AI Engine** | Python, FastAPI, Uvicorn, Scikit-Learn | Python 3.11, Scikit 1.6| Sub-50ms local machine learning microservice |
+| **Database** | PostgreSQL Alpine, Flyway, HikariCP | PG 16, Flyway 10 | Relational data persistence & versioned schema |
+| **Reverse Proxy** | Nginx Alpine | Nginx 1.25 | Gzip compression, security headers & reverse proxy |
+| **Containerization**| Docker, Docker Compose | Compose Spec 3.8 | Multi-container orchestration & isolated networking|
 
 ---
 
-## 7. Local Development Setup
+## 5. Quickstart Deployment Guide (Docker Compose)
 
-### Prerequisites
-- **Node.js**: v20+ and npm
-- **Java**: JDK 21 LTS
-- **Python**: 3.10+ and pip
-- **PostgreSQL**: 16+ (or run via Docker Compose)
+### 1. Clone the Repository
+```bash
+git clone https://github.com/tharunsai2307/NEXORA.git
+cd NEXORA
+```
 
-### 1. Configure Environment
-Copy `.env.example` to `.env`:
+### 2. Configure Environment Variables
 ```bash
 cp .env.example .env
 ```
+*(On Windows PowerShell, use `Copy-Item .env.example .env`)*
 
-### 2. Start PostgreSQL
-```bash
-docker compose up -d postgres
-```
-
-### 3. Start Python AI Service
-```bash
-cd ai-engine
-python -m venv venv
-.\venv\Scripts\activate   # Windows
-# source venv/bin/activate # Linux/macOS
-pip install -r requirements.txt
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-### 4. Start Java Spring Boot Backend
-```bash
-cd backend
-./mvnw spring-boot:run     # Linux/macOS
-# .\mvnw.cmd spring-boot:run # Windows
-```
-
-### 5. Start React Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
-Open `http://localhost:5173` in your browser.
-
----
-
-## 8. Docker Compose Deployment
-
-Run all four services with a single command:
+### 3. Start Application
 ```bash
 docker compose up -d --build
 ```
 
-To stop all services:
-```bash
-docker compose down
+### 4. Access the Dashboard
+Open your web browser and navigate to:
 ```
-
-To inspect container logs:
-```bash
-docker compose logs -f
+http://localhost (or http://localhost:80)
 ```
 
 ---
 
-## 9. Automated Testing Execution
+## 6. Preconfigured Demo User Accounts
 
-All three service tiers contain standalone, fully automated test suites:
+NEXORA comes seeded with four preconfigured accounts matching each RBAC persona:
 
-### Run All Tests via PowerShell Script
-```powershell
-.\scripts\run-tests.ps1
-```
+| Persona | Email Address | Password | Primary Accessible Modules |
+| :--- | :--- | :--- | :--- |
+| **System Administrator** | `admin@nexora.com` | `Admin@123` | Full Access: User RBAC, Topologies, Model Retrain, Post-Mortems |
+| **Building Manager** | `manager@nexora.com` | `Manager@123` | Fleet Management, Sensors, Simulations, Analytics & Reports |
+| **Safety Officer** | `safety@nexora.com` | `Safety@123` | Emergency Operations Center, Dijkstra Routing, Corridor Blockades |
+| **Building Occupant** | `occupant@nexora.com` | `Occupant@123` | 3D Twin Viewer, Active Evacuation Routes, Profile |
 
-### Manual Individual Test Commands
-- **Python AI Engine**:
-  ```bash
-  cd ai-engine
-  python -m pytest tests/ -v
-  ```
-- **Java Spring Boot Backend**:
-  ```bash
-  cd backend
-  ./mvnw test
-  ```
-- **React Frontend**:
-  ```bash
-  cd frontend
-  npm test
-  ```
+*Tip: Use the one-click **"Select Preconfigured Demo Role"** buttons on the login screen for instant authentication.*
 
 ---
 
-## 10. Troubleshooting Guide
+## 7. Technical Documentation Sitemap
 
-| Issue | Likely Cause | Resolution |
-|---|---|---|
-| **AI Engine status shows Disconnected in UI** | Python AI service is not running on port 8000 | Verify AI service is active via `curl http://localhost:8000/health` or `uvicorn app.main:app --port 8000`. |
-| **Database status shows Disconnected in UI** | PostgreSQL container is stopped or port 5432 is occupied | Run `docker compose up -d postgres` and check credentials in `.env`. |
-| **CORS errors in browser console** | Backend CORS policy is rejecting origin | Ensure `http://localhost:5173` is included in `cors.allowed-origins` inside `application.yml`. |
-| **Flyway migration fails on startup** | Database credentials or existing incompatible schema | Inspect logs; verify database user has `CREATE TABLE` permissions on `smart_building_db`. |
-| **Vite port conflict** | Port 5173 is already in use by another Vite process | Terminate the existing node process or pass `--port 5174` in `npm run dev`. |
+Detailed specifications and architectural guides are maintained in the [`docs/`](./docs) directory:
+
+- [**System Architecture & ADRs**](./docs/architecture/architecture.md): C4 system models, component specifications, deployment topology, and ADR records.
+- [**UML Diagrams (OOAD)**](./docs/uml/UML_DIAGRAMS.md): UML Use Case, Domain Class Diagram, 3 Sequence Diagrams, and Emergency Activity Diagram.
+- [**Database Schema & Migrations**](./docs/DATABASE_SCHEMA.md): Complete Mermaid ER diagram and Flyway migration ledger (V1 through V6).
+- [**REST API & WebSocket Documentation**](./docs/API_DOCUMENTATION.md): Complete catalog of REST endpoints and STOMP topic channels.
+- [**Edge AI Methodology**](./docs/AI_METHODOLOGY.md): Isolation Forest, Random Forest, explainable risk algorithms, inputs, outputs, and metrics.
+- [**Simulation & Evacuation Routing**](./docs/SIMULATION_AND_EVACUATION.md): Virtual sensor physics, scenario injection, and weighted Dijkstra pathfinding.
+- [**Installation & Operations Guide**](./docs/INSTALLATION.md): Comprehensive Docker Compose and standalone local setup instructions.
+- [**User & Administrator Manual**](./docs/USER_GUIDE.md): Feature tours, RBAC matrix, and operational walkthroughs.
+- [**Troubleshooting Runbook**](./docs/TROUBLESHOOTING.md): Health checks, port conflict fixes, WebGL recovery, and log inspection.
+- [**Limitations & Future Scope**](./docs/LIMITATIONS.md): Transparent documentation of simulation boundaries and future roadmap.
+- [**Capstone Presentation Outline**](./docs/PRESENTATION.md): Exactly 6 defense slides covering problems, architecture, AI, and evacuation.
+- [**Phase 9 Deployment Report**](./docs/PHASE_9_REPORT.md): Final deployment verification and handoff summary.
+
+---
+
+## 8. License & Academic Attribution
+
+This project is submitted as an academic software engineering capstone project under the title:  
+**Edge-AI-Based Smart Building Safety and Occupancy Digital Twin System**.

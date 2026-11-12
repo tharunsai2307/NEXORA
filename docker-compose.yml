@@ -1,7 +1,12 @@
 version: '3.8'
 
+# =============================================================================
+# NEXORA — Production Docker Compose Deployment Definition
+# Edge-AI-Based Smart Building Safety and Occupancy Digital Twin System
+# =============================================================================
+
 services:
-  # 1. PostgreSQL Database Service
+  # 1. PostgreSQL Relational Database Service (Internal Isolated)
   postgres:
     image: postgres:16-alpine
     container_name: smart_building_postgres
@@ -10,8 +15,6 @@ services:
       POSTGRES_DB: ${DB_NAME:-smart_building_db}
       POSTGRES_USER: ${DB_USER:-smart_admin}
       POSTGRES_PASSWORD: ${DB_PASSWORD:-smart_building_secure_pass_2026}
-    ports:
-      - "${DB_PORT:-5432}:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./database/init:/docker-entrypoint-initdb.d:ro
@@ -24,7 +27,7 @@ services:
     networks:
       - smart-building-net
 
-  # 2. Python FastAPI Edge-AI Service
+  # 2. Python FastAPI Edge-AI Microservice (Internal Isolated)
   ai-service:
     build:
       context: ./ai-engine
@@ -35,18 +38,16 @@ services:
       HOST: 0.0.0.0
       PORT: 8000
       ENVIRONMENT: production
-    ports:
-      - "${AI_SERVICE_PORT:-8000}:8000"
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
       interval: 15s
       timeout: 5s
       retries: 3
-      start_period: 10s
+      start_period: 15s
     networks:
       - smart-building-net
 
-  # 3. Java 21 Spring Boot Backend Core
+  # 3. Java 21 Spring Boot Backend Service (Internal Isolated)
   backend:
     build:
       context: ./backend
@@ -59,7 +60,7 @@ services:
       ai-service:
         condition: service_healthy
     environment:
-      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
       PORT: 8080
       DB_HOST: postgres
       DB_PORT: 5432
@@ -67,8 +68,9 @@ services:
       DB_USER: ${DB_USER:-smart_admin}
       DB_PASSWORD: ${DB_PASSWORD:-smart_building_secure_pass_2026}
       AI_SERVICE_URL: http://ai-service:8000
-    ports:
-      - "${BACKEND_PORT:-8080}:8080"
+      JWT_SECRET: ${JWT_SECRET:-nexora_secret_key_smart_building_digital_twin_super_secure_key_2026_at_least_256_bits}
+      JWT_EXPIRATION_MS: ${JWT_EXPIRATION_MS:-86400000}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost,http://localhost:80,http://localhost:5173,http://127.0.0.1}
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://localhost:8080/api/v1/health || exit 1"]
       interval: 20s
@@ -78,7 +80,7 @@ services:
     networks:
       - smart-building-net
 
-  # 4. React Frontend (Nginx Production Container)
+  # 4. React Single Page Application served via Nginx Reverse Proxy (Public Entrypoint)
   frontend:
     build:
       context: ./frontend
@@ -89,7 +91,7 @@ services:
       backend:
         condition: service_healthy
     ports:
-      - "${FRONTEND_PORT:-5173}:80"
+      - "${FRONTEND_PORT:-80}:80"
     healthcheck:
       test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost/ || exit 1"]
       interval: 15s

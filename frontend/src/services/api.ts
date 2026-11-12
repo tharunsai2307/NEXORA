@@ -56,6 +56,20 @@ import {
   EvacuationRoute,
   EvacuationConnection,
 } from '../types/emergency';
+import {
+  AnalyticsOverviewResponse,
+  SensorAnalyticsResponse,
+  OccupancyAnalyticsResponse,
+  AiAnalyticsResponse,
+  IncidentAnalyticsResponse,
+  EvacuationAnalyticsResponse,
+  HistoricalQueryResponse,
+  PostMortemRequest,
+  PostMortemResponse,
+  GeneratedReportResponse,
+  ReportType,
+  ReportFormat,
+} from '../types/analytics';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080/api/v1';
 
@@ -633,5 +647,104 @@ export const evacuationApi = {
   async recalculateRoutes(buildingId: string): Promise<EvacuationRoute[]> {
     const response = await apiClient.post<ApiResponse<EvacuationRoute[]>>(`/evacuation/buildings/${buildingId}/routes/recalculate`);
     return response.data.data;
+  },
+};
+
+export const analyticsApi = {
+  async getOverview(params?: { buildingId?: string; start?: string; end?: string }): Promise<AnalyticsOverviewResponse> {
+    const response = await apiClient.get<ApiResponse<AnalyticsOverviewResponse>>('/analytics/overview', { params });
+    return response.data.data;
+  },
+
+  async getSensorAnalytics(params?: {
+    buildingId?: string;
+    roomId?: string;
+    sensorType?: string;
+    start?: string;
+    end?: string;
+  }): Promise<SensorAnalyticsResponse> {
+    const response = await apiClient.get<ApiResponse<SensorAnalyticsResponse>>('/analytics/sensors', { params });
+    return response.data.data;
+  },
+
+  async getOccupancyAnalytics(params?: { buildingId?: string; start?: string; end?: string }): Promise<OccupancyAnalyticsResponse> {
+    const response = await apiClient.get<ApiResponse<OccupancyAnalyticsResponse>>('/analytics/occupancy', { params });
+    return response.data.data;
+  },
+
+  async getAiAnalytics(params?: { buildingId?: string; start?: string; end?: string }): Promise<AiAnalyticsResponse> {
+    const response = await apiClient.get<ApiResponse<AiAnalyticsResponse>>('/analytics/ai', { params });
+    return response.data.data;
+  },
+
+  async getIncidentAnalytics(params?: { buildingId?: string; start?: string; end?: string }): Promise<IncidentAnalyticsResponse> {
+    const response = await apiClient.get<ApiResponse<IncidentAnalyticsResponse>>('/analytics/incidents', { params });
+    return response.data.data;
+  },
+
+  async getEvacuationAnalytics(params?: { buildingId?: string; start?: string; end?: string }): Promise<EvacuationAnalyticsResponse> {
+    const response = await apiClient.get<ApiResponse<EvacuationAnalyticsResponse>>('/analytics/evacuations', { params });
+    return response.data.data;
+  },
+
+  async queryHistory(params?: {
+    buildingId?: string;
+    recordType?: string;
+    start?: string;
+    end?: string;
+    page?: number;
+    size?: number;
+  }): Promise<HistoricalQueryResponse> {
+    const response = await apiClient.get<ApiResponse<HistoricalQueryResponse>>('/analytics/history', { params });
+    return response.data.data;
+  },
+};
+
+export const reportsApi = {
+  async listReports(buildingId?: string): Promise<GeneratedReportResponse[]> {
+    const response = await apiClient.get<ApiResponse<GeneratedReportResponse[]>>('/reports', { params: { buildingId } });
+    return response.data.data;
+  },
+
+  async exportReport(params: {
+    reportType: ReportType;
+    buildingId?: string;
+    format: ReportFormat;
+    start?: string;
+    end?: string;
+  }): Promise<Blob> {
+    const response = await apiClient.get('/reports/export', {
+      params,
+      responseType: 'blob',
+    });
+    return response.data;
+  },
+
+  async getIncidentPostMortem(incidentId: string): Promise<PostMortemResponse> {
+    const response = await apiClient.get<ApiResponse<PostMortemResponse>>(`/reports/incidents/${incidentId}/postmortem`);
+    return response.data.data;
+  },
+
+  async saveIncidentPostMortem(incidentId: string, payload: PostMortemRequest): Promise<PostMortemResponse> {
+    const response = await apiClient.post<ApiResponse<PostMortemResponse>>(`/reports/incidents/${incidentId}/postmortem`, payload);
+    return response.data.data;
+  },
+
+  async finalizeIncidentPostMortem(incidentId: string): Promise<PostMortemResponse> {
+    const response = await apiClient.post<ApiResponse<PostMortemResponse>>(`/reports/incidents/${incidentId}/postmortem/finalize`);
+    return response.data.data;
+  },
+
+  async listPostMortems(status?: string): Promise<PostMortemResponse[]> {
+    const response = await apiClient.get<ApiResponse<PostMortemResponse[]>>('/reports/postmortems', { params: { status } });
+    return response.data.data;
+  },
+
+  async exportPostMortem(postMortemId: string, format: ReportFormat = 'PDF'): Promise<Blob> {
+    const response = await apiClient.get(`/reports/postmortems/${postMortemId}/export`, {
+      params: { format },
+      responseType: 'blob',
+    });
+    return response.data;
   },
 };
